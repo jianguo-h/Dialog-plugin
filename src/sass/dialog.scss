@@ -1,81 +1,15 @@
-$fontSize: 14px;
-$pad: 4%;
-@mixin borderRadius($radius: 4px) {
-	-webkit-border-radius: $radius;
-	   -moz-border-radius: $radius;
-		-ms-border-radius: $radius;
-		 -o-border-radius: $radius;
-		 	border-radius: $radius;
-}
-@mixin flexHorizontal($flexhorizontal: center, $boxhorizontal: center) {
-	-webkit-justify-content: $flexhorizontal;
-	   -moz-justify-content: $flexhorizontal;
-		-ms-justify-content: $flexhorizontal;
-			justify-content: $flexhorizontal;
-		    -webkit-box-pack: $boxhorizontal;
-		       -moz-box-pack: $boxhorizontal;
-		   	   -ms-flex-pack: $boxhorizontal;
-		   	   	    box-pack: $boxhorizontal;
-}
-@mixin flexVertical($flexvertical: center, $boxvertical: center) {
-	-webkit-align-items: $flexvertical;
-	   -moz-align-items: $flexvertical;
-		-ms-align-items: $flexvertical;
-			align-items: $flexvertical;
-	   -webkit-box-align: $boxvertical;
-	      -moz-box-align: $boxvertical;
-	      -ms-flex-align: $boxvertical;
-			   box-align: $boxvertical;
-}
-%flexbox {
-	display: flex;
-	display: -webkit-flex;
-	display: -moz-flex;
-	display: -ms-flexbox;
-	display: box;
-	display: -webkit-box;
-	display: -moz-box;
-}
-%flexCenter {
-	@include flexHorizontal;
-	@include flexVertical;
-}
-%ptb4 { padding: $pad 0; }
-/* reset */
-html {
-	outline: none;
-	-webkit-tap-highlight-color: transparent;  /* 去除点击时的高亮边框 */
-	-webkit-overflow-scrolling: touch;         /* 增加弹性滚动效果 */
-	-webkit-text-size-adjust: none;            /* 防止转屏时文字大小变化 */
-	-webkit-touch-callout: none;    		   /* 禁止 iOS 弹出各种操作窗口 */
-	-webkit-user-select: none;     			   /* 禁止用户选择文字 */
-}
-body {
-	font-family: "Microsoft Yahei", "Arial", "sans-serif";
-}
-html, body, div, p, button, img {
+html, body, div, span, p, button, img {
 	padding: 0;
 	margin: 0;
-	border: none;
 	outline: none;
-	-webkit-tap-highlight-color: transparent;
 }
-/* common css */
-.clearfix {
-	&:after{
-		content: "";
-		display: block;
-		clear: both;
-		height: 0;
-		visibility: hidden;
-	}
-}
+
 .btn {
 	width: 47.5%;
 	display: block;
 	cursor: pointer;
 	line-height: 36px;
-	@include borderRadius;
+	border-radius: 4px;
 }
 /* 遮罩层 */
 .dialog-mask {
@@ -86,8 +20,9 @@ html, body, div, p, button, img {
 	z-index: 100;
 	position: fixed;
 	background-color: rgba(0, 0, 0, .5);
-	@extend %flexbox;
-	@extend %flexCenter;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 /* 对话框 */
 .dialog-box {
@@ -95,16 +30,16 @@ html, body, div, p, button, img {
 	color: #fff;
 	text-align: center;
 	background-color: #000;
-	@extend %ptb4;
-	@include borderRadius;
+	border-radius: 4px;
+	padding: 4% 0;
 	.dialog-img {
 		height: auto;
 		padding-bottom: 4%;
 	}
 	.dialog-btns-box {
 		padding: 6% 5% 0;
-		@extend %flexbox;
-		@include flexHorizontal(space-between, justify);
+		display: flex;
+		justify-content: space-between;
 		.dialog-btn1, .dialog-btn2, .dialog-btn3 {
 			@extend .btn;
 		}
@@ -113,7 +48,7 @@ html, body, div, p, button, img {
 		.dialog-btn3 { background-color: #d2be15; }
 	}
 	.dialog-btns-box-1 {
-		@include flexHorizontal;
+		justify-content: center;
 		.dialog-btn1 {
 			width: 100%;
 			background-color: #25a1e9;
