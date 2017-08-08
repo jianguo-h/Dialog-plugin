@@ -28,10 +28,16 @@ html, body, div, span, p, button, img {
 .dialog-box {
 	width: 70%;
 	color: #fff;
-	text-align: center;
-	background-color: #000;
-	border-radius: 4px;
 	padding: 4% 0;
+	text-align: center;
+	border-radius: 4px;
+	background-color: #000;
+	&.gradientShow {
+		animation: gradientShow .3s ease forwards;
+	}
+	/* &.gradientHide {
+		animation: gradientHide .3s ease forwards;
+	} */
 	.dialog-img {
 		height: auto;
 		padding-bottom: 4%;
@@ -101,3 +107,19 @@ html, body, div, span, p, button, img {
 	left: 50%;
 	top: 50%;
 }
+@keyframes gradientShow {
+	from {
+		transform: scale(0);
+	}
+	to {
+		transform: scale(100%);
+	}
+}
+/* @keyframes gradientHide {
+	from {
+		transform: scale(100%);
+	}
+	to {
+		transform: scale(0);
+	}
+} */

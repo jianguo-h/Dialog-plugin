@@ -3,6 +3,9 @@ String.prototype.trim = function() {
 }
 export default class Dialog {
 	constructor(opts) {
+		if(!(this instanceof Dialog)) {
+			return this;
+		}
 		this.defaults = {
 			imgSrc: "",
 			delay: null,
@@ -76,7 +79,7 @@ export default class Dialog {
 			dialogBox.appendChild(dialogImg);
 		}
 		if(message.trim() !== "") {
-			dialogContent.innerHTML = message;
+			dialogContent.textContent = message;
 			dialogContent.className = "dialog-content";
 			dialogBox.appendChild(dialogContent);
 			this.setDialogContent(dialogContent);
@@ -111,7 +114,7 @@ export default class Dialog {
 				evt.cancelBubble = true;
 				evt.returnValue = false;
 			}
-		});
+		}).dealClass(dialogBox, "gradientShow", "addClass");
 		if(width !== null) {
 			this.css(dialogBox, "width", `${width}px`);
 		}
@@ -201,19 +204,15 @@ export default class Dialog {
 	}
 	// 关闭
 	close() {	 
-		this.dialogMask.parentNode.removeChild(this.dialogMask);
+		const { opts, dialogMask, dialogBox } = this;
+		let removeEle = opts.maskShow === true ? dialogMask : dialogBox;
+
+		removeEle.parentNode.removeChild(removeEle);
 	}
 	// 创建按钮数组
 	createButtons(dialogBox, btnArr) {	
 		const { opts, eventType, dialogBtnsBox } = this;
 		let btnArrLen = btnArr.length;
-		let width = null;
-		let height = null;
-		let backgroundColor = "";
-		let fontSize = null;
-		let borderRadius = null;
-		let color = "";
-		let callback = null;
 
 		dialogBtnsBox.className = "dialog-btns-box";
 		if(btnArrLen === 1) {
@@ -224,19 +223,20 @@ export default class Dialog {
 			btnArrLen = btnArr.length;
 			this.dealClass(dialogBtnsBox, "dialog-btns-box-3", "addClass");
 		}
-		for(let i = 0; i < btnArrLen; i++) {
-			color = (typeof btnArr[i].color === "string") ? btnArr[i].color : "";
-			callback = (typeof btnArr[i].callback === "function") ? btnArr[i].callback : null;
-			backgroundColor = (typeof btnArr[i].backgroundColor === "string") ? btnArr[i].backgroundColor : "";
-			width = (typeof btnArr[i].width === "number" && btnArr[i].width >= 0) ? parseInt(btnArr[i].width) : null;
-			height = (typeof btnArr[i].height === "number" && btnArr[i].height >= 0) ? parseInt(btnArr[i].height) : null;
-			fontSize = (typeof btnArr[i].fontSize === "number" && btnArr[i].fontSize >= 0) ? parseInt(btnArr[i].fontSize) : null;
-			borderRadius = (typeof btnArr[i].borderRadius === "number" && btnArr[i].borderRadius >= 0) ? parseInt(btnArr[i].borderRadius) : null
-
+		for(let [index, btn] of btnArr.entries()) {
+			let color = (typeof btn.color === "string") ? btn.color : "";
+			let callback = (typeof btn.callback === "function") ? btn.callback : null;
+			let backgroundColor = (typeof btn.backgroundColor === "string") ? btn.backgroundColor : "";
+			let width = (typeof btn.width === "number" && btn.width >= 0) ? parseInt(btn.width) : null;
+			let height = (typeof btn.height === "number" && btn.height >= 0) ? parseInt(btn.height) : null;
+			let fontSize = (typeof btn.fontSize === "number" && btn.fontSize >= 0) ? parseInt(btn.fontSize) : null;
+			let borderRadius = (typeof btn.borderRadius === "number" && btn.borderRadius >= 0) ? parseInt(btn.borderRadius) : null;
 			let dialogBtn = document.createElement("span");
-			dialogBtn.className = `dialog-btn${i + 1}`;
-			dialogBtn.innerHTML = btnArr[i].text;
+
+			dialogBtn.className = `dialog-btn${index + 1}`;
+			dialogBtn.textContent = btn.text;
 			dialogBtnsBox.appendChild(dialogBtn);
+			
 			if(width !== null) {
 				this.css(dialogBtn, "width", `${width}px`);
 			}
@@ -267,22 +267,21 @@ export default class Dialog {
 		}
 		dialogBox.appendChild(dialogBtnsBox);
 	}
-	// 返回适合当前浏览器版本的css属性，否则返回false
-	prefix(prop) {
-		const style = this.createDom("dummy").style;
-	    const prefixes = ["webkit", "moz", "o", "ms"];
-	    let prefixeProp = "";
+	// 为元素绑定事件
+	on(ele, eventStrs, callback) {   
+		const eventList = eventStrs.split(" ");
 
-	    if(style[prop] !== undefined) return prop;
-	    
-		prop = prop.charAt(0).toUpperCase() + prop.substr(1);
-		for(let prefix of prefixes) {
-			prefixeProp = prefix + prop;
-			if(style[prefixeProp] !== undefined) {
-    			return prefixeProp;
-    		}
+		if(typeof callback === "function") {
+			for(let event of eventList) {
+				if(document.addEventListener) {
+					ele.addEventListener(event, callback);
+				}
+				else {
+					ele.attachEvent(`on${event}`, callback);
+				}
+			}
 		}
-		return false;		    	
+		return this;
 	}
 	// 设置css样式
 	css(...args) {
@@ -365,21 +364,22 @@ export default class Dialog {
 		}
 		return target;
 	}
-	// 为元素绑定事件
-	on(ele, eventType, callback) {   
-		const eventList = eventType.split(" ");
+	// 返回适合当前浏览器版本的css属性，否则返回false
+	prefix(prop) {
+		const style = this.createDom("dummy").style;
+	    const prefixes = ["webkit", "moz", "o", "ms"];
+	    let prefixeProp = "";
 
-		if(typeof callback === "function") {
-			for(let event of eventList) {
-				if(document.addEventListener) {
-					ele.addEventListener(event, callback);
-				}
-				else {
-					ele.attachEvent(`on${event}`, callback);
-				}
-			}
+	    if(style[prop] !== undefined) return prop;
+	    
+		prop = prop.charAt(0).toUpperCase() + prop.substr(1);
+		for(let prefix of prefixes) {
+			prefixeProp = prefix + prop;
+			if(style[prefixeProp] !== undefined) {
+    			return prefixeProp;
+    		}
 		}
-		return this;
+		return false;		    	
 	}
 	// 判断平台
 	judgePlatform() {
