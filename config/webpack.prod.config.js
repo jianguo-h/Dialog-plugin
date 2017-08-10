@@ -21,7 +21,7 @@ const webpackProdConfig = webpackMerge(webpackBaseConfig, {
 					use: [
 						"css-loader",
 						"postcss-loader",
-						"less-loader"
+						"sass-loader"
 					]
 				})
 			}

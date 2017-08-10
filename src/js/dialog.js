@@ -1,3 +1,14 @@
+Array.prototype.includes = function(value) {
+	for(let val of this) {
+		if(val.toString() === value.toString()) {
+			return true;
+		}
+	}
+	return false;
+}
+String.prototype.includes = function(str) {
+	return this.indexOf(str) !== -1 ? true : false;
+}
 String.prototype.trim = function() {
 	return this.replace(/(^\s*)|(\s*$)/g, "");
 }
@@ -7,29 +18,29 @@ export default class Dialog {
 			return this;
 		}
 		this.defaults = {
-			imgSrc: "",
-			delay: null,
-			width: null,
-			height: null,
-			color: "#fff",
-			opacity: null,
-			trigger: true,
-			fontSize: null,
-			maskShow: true,
-			borderRadius: null,
-			textAlign: "center",
-			backgroundColor: "",
-			message: "在这里填写您的信息",
-			btnArr: [
+			imgSrc: "",							// 图片的路径(String), default: ""
+			delay: null,						// 多少秒后自动关闭(Number), default: null
+			width: null,						// 弹层的宽度(Number), default: null
+			height: null,						// 弹层的高度(Number), default: null
+			color: "#fff",						// 中间提示字体的颜色(String), default: #fff
+			opacity: null,						// 弹层遮罩层的透明度(Number), default: null
+			trigger: true,						// 点击遮罩层是否隐藏(Boolean), default: true
+			fontSize: null,						// 中间提示字体的大小(Number), default: null
+			maskShow: true,						// 是否显示遮罩层(Boolean), default: true
+			borderRadius: null,					// 弹层的圆角大小(Number), default: null
+			textAlign: "center",				// 中间提示字体的位置(String), default: center, 可选left, right
+			backgroundColor: "",				// 弹层的背景颜色(String), default: ""
+			message: "在这里填写您的信息",		// 提示的内容, default: ""
+			btnArr: [							// 按钮数组, 默认为2个, 最多3个, 不需要时可设为null
 				{
-					color: "",
-					text: "取消",
-					width: null,
-					height: null,
-					callback: null,
-					fontSize: null,
-					borderRadius: null,
-					backgroundColor: ""
+					color: "",					// 按钮字体的颜色, default: ""
+					text: "取消",				// 按钮的内容, default: "取消"
+					width: null,				// 按钮的宽度, default: null
+					height: null,				// 按钮的高度, default: null
+					callback: null,				// 点击时的回调, default: null
+					fontSize: null,				// 按钮字体的大小, default: null
+					borderRadius: null,			// 按钮的圆角大小, default: null
+					backgroundColor: ""			// 按钮的背景颜色, default: null
 				},
 				{
 					color: "",
@@ -43,7 +54,7 @@ export default class Dialog {
 				}
 			]
 		};
-		this.opts = this.extend(this.defaults, opts);
+		this.opts = this.extend(true, {}, this.defaults, opts);
 		this.init();
 	}
 	// 渲染dom
@@ -259,10 +270,10 @@ export default class Dialog {
 				this.css(dialogBtn, "color", color);
 			}
 			this.on(dialogBtn, eventType, () => {
-				this.close();
 				if(typeof callback === "function") {
 					callback();
 				}
+				this.close();
 			});	
 		}
 		dialogBox.appendChild(dialogBtnsBox);
@@ -329,38 +340,62 @@ export default class Dialog {
 		return this;
 	}
 	// 自定义扩展参数
-	extend(defaults, opts) {
-		opts = opts || {};
-		let target = defaults || {}; 
-		let clone; 
-		let src; 
-		let copy; 
-		let deep;
+	extend(...args) {
+		let options, name, src, copy, copyIsArray, clone,
+			target = args[0] || {},
+			i = 1,
+			length = args.length,
+			deep = false;
 
+		// 处理深度拷贝情况(第一个参数是boolean类型且为true) 
+		if(typeof target === "boolean") {
+			deep = target;
+			target = args[ i ] || {};
+			// 跳过第一个参数(是否深度拷贝)和第二个参数(目标对象)  
+			i++;
+		}
+		// 如果目标不是对象或函数, 则初始化为空对象  
 		if(typeof target !== "object" && typeof target !== "function") {
 			target = {};
 		}
-		if(opts !== null) {
-			for(let item in opts) {
-				src = target[item];
-				copy = opts[item];
-				if(target === copy) {
-					continue;
-				}
-				deep = (copy && typeof copy === "object") ? false : true;
-				if(deep && copy && typeof copy === "object") {
-					if(copy instanceof Array) {
-						clone = (src && src instanceof Array) ? src : [];
+		// 如果只指定了一个参数, 则使用jQuery自身作为目标对象
+		if(i === length) {
+			target = this;
+			i--;
+		}
+
+		for(; i < length; i++) {
+			if((options = args[i]) !== null) {
+				// Extend the base object  
+				for(name in options) {
+					src = target[name];
+					copy = options[name];
+					if(target === copy) {
+						continue;
 					}
-					else {
-						clone = (src && src instanceof Object) ? src : {};
+					// 如果对象中包含了数组或者其他对象, 则使用递归进行拷贝  
+					copyIsArray = Array.isArray(copy);
+					if(deep && copy && (typeof copy === "object" || copyIsArray)) {
+					// if(deep && copy && (typeof copy === "object" || (copyIsArray = Array.isArray(copy)))) {
+						// 处理数组  
+						if(copyIsArray) {
+							copyIsArray = false;
+							// 如果目标对象不存在该数组, 则创建一个空数组；  
+							clone = src && Array.isArray(src) ? src : [];
+						} 
+						else {
+							clone = src && typeof src === "object" ? src : {};
+						}
+						// 从不改变原始对象, 只做拷贝  
+						target[name] = this.extend(deep, clone, copy);
+
+					} 
+					// 不拷贝undefined值  
+					else if(copy !== undefined) {
+						target[name] = copy;
 					}
-					target[item] = this.extend(clone, copy);
 				}
-				else if(copy !== undefined) {
-					target[item] = copy;
-				}
-			}	
+			}
 		}
 		return target;
 	}

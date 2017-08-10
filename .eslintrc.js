@@ -13,6 +13,7 @@ module.exports = {
 	'rules': {
 		'no-new': 0,
 		'one-var': 0,
+		'no-multi-spaces': 0,
 		'no-mixed-operators': 0,
 		'space-in-parens': 0,
 		'no-unneeded-ternary': 0,
