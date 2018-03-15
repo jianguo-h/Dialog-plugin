@@ -8,4 +8,23 @@
 <body>
 	<button id = "test">测试dialog</button>
 </body>
+<script>
+	document.querySelector("#test").addEventListener("click", () => {
+		new Dialog({
+			imgSrc: "./static/images/right.png",
+			btnArr: [
+				{	
+					callback: function() {
+						alert(">>> cancel");
+					}
+				},
+				{
+					callback: function() {
+						alert(">>> confirm");
+					}
+				}
+			]
+		});
+	});
+</script>
 </html>
