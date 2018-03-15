@@ -1,47 +1,36 @@
 import './dialog.scss';
-Array.prototype.includes = function (value) {
-  for(let val of this) {
-    if(val.toString() === value.toString()) {
-      return true;
-    }
-  }
-  return false;
-}
-String.prototype.includes = function (str) {
-  return this.indexOf(str) !== -1 ? true : false;
-}
-String.prototype.trim = function () {
+/* String.prototype.trim = function () {
   return this.replace(/(^\s*)|(\s*$)/g, "");
-}
+} */
 class Dialog {
   constructor(opts) {
     if(!(this instanceof Dialog)) {
       return this;
     }
     this.defaults = {
-      imgSrc: "",							// 图片的路径(String), default: ""
-      delay: null,						// 多少秒后自动关闭(Number), default: null
-      width: null,						// 弹层的宽度(Number), default: null
-      height: null,						// 弹层的高度(Number), default: null
-      color: "#fff",						// 中间提示字体的颜色(String), default: #fff
-      opacity: null,						// 弹层遮罩层的透明度(Number), default: null
-      trigger: true,						// 点击遮罩层是否隐藏(Boolean), default: true
-      fontSize: null,						// 中间提示字体的大小(Number), default: null
-      maskShow: true,						// 是否显示遮罩层(Boolean), default: true
-      borderRadius: null,					// 弹层的圆角大小(Number), default: null
-      textAlign: "center",				// 中间提示字体的位置(String), default: center, 可选left, right
-      backgroundColor: "",				// 弹层的背景颜色(String), default: ""
-      message: "在这里填写您的信息",		// 提示的内容, default: ""
-      btnArr: [							// 按钮数组, 默认为2个, 最多3个, 不需要时可设为null
+      imgSrc: "",                           // 图片的路径(String), default: ""
+      delay: null,                          // 多少秒后自动关闭(Number), default: null
+      width: null,                          // 弹层的宽度(Number), default: null
+      height: null,                         // 弹层的高度(Number), default: null
+      color: "#fff",                        // 中间提示字体的颜色(String), default: #fff
+      opacity: null,                        // 弹层遮罩层的透明度(Number), default: null
+      trigger: true,                        // 点击遮罩层是否隐藏(Boolean), default: true
+      fontSize: null,                       // 中间提示字体的大小(Number), default: null
+      maskShow: true,                       // 是否显示遮罩层(Boolean), default: true
+      borderRadius: null,                   // 弹层的圆角大小(Number), default: null
+      textAlign: "center",                  // 中间提示字体的位置(String), default: center, 可选left, right
+      backgroundColor: "",                  // 弹层的背景颜色(String), default: ""
+      message: "在这里填写您的信息",         // 提示的内容, default: ""
+      btnArr: [                             // 按钮数组, 默认为2个, 最多3个, 不需要时可设为null
         {
-          color: "",					// 按钮字体的颜色, default: ""
-          text: "取消",				// 按钮的内容, default: "取消"
-          width: null,				// 按钮的宽度, default: null
-          height: null,				// 按钮的高度, default: null
-          callback: null,				// 点击时的回调, default: null
-          fontSize: null,				// 按钮字体的大小, default: null
-          borderRadius: null,			// 按钮的圆角大小, default: null
-          backgroundColor: ""			// 按钮的背景颜色, default: null
+          color: "",                        // 按钮字体的颜色, default: ""
+          text: "取消",                     // 按钮的内容, default: "取消"
+          width: null,                      // 按钮的宽度, default: null
+          height: null,                     // 按钮的高度, default: null
+          callback: null,                   // 点击时的回调, default: null
+          fontSize: null,                   // 按钮字体的大小, default: null
+          borderRadius: null,               // 按钮的圆角大小, default: null
+          backgroundColor: ""               // 按钮的背景颜色, default: null
         },
         {
           color: "",
@@ -80,10 +69,10 @@ class Dialog {
     }
 
     const platform = this.judgePlatform();
-    const { opts, dialogBox, dialogImg, dialogMask, dialogContent } = this;
-    let imgSrc = (typeof opts.imgSrc === "string") ? opts.imgSrc : "";
-    let btnArr = (typeof opts.btnArr === "object") ? opts.btnArr : null;
-    let message = (typeof opts.message === "string") ? opts.message : "";
+    const { opts, dialogBox, dialogImg, dialogContent } = this;
+    const imgSrc = (typeof opts.imgSrc === "string") ? opts.imgSrc : "";
+    const btnArr = (typeof opts.btnArr === "object") ? opts.btnArr : null;
+    const message = (typeof opts.message === "string") ? opts.message : "";
 
     if(imgSrc.trim() !== "") {
       dialogImg.src = imgSrc;
@@ -107,14 +96,14 @@ class Dialog {
   // 设置属性
   setAttribute() {
     const { opts, dialogBox, eventType, dialogMask } = this;
-    let opacity = (typeof opts.opacity === "number") ? opts.opacity : null;
-    let trigger = (typeof opts.trigger === "boolean") ? opts.trigger : true;
-    let maskShow = (typeof opts.maskShow === "boolean") ? opts.maskShow : true;
-    let delay = (typeof opts.delay === "number" && opts.delay >= 0) ? opts.delay : null;
-    let backgroundColor = (typeof opts.backgroundColor === "string") ? opts.backgroundColor : "";
-    let width = (typeof opts.width === "number" && opts.width >= 0) ? parseInt(opts.width) : null;
-    let height = (typeof opts.height === "number" && opts.height >= 0) ? parseInt(opts.height) : null;
-    let borderRadius = (typeof opts.borderRadius === "number" && opts.borderRadius >= 0) ? parseInt(opts.borderRadius) : null;
+    const opacity = (typeof opts.opacity === "number") ? opts.opacity : null;
+    const trigger = (typeof opts.trigger === "boolean") ? opts.trigger : true;
+    const maskShow = (typeof opts.maskShow === "boolean") ? opts.maskShow : true;
+    const delay = (typeof opts.delay === "number" && opts.delay >= 0) ? opts.delay : null;
+    const backgroundColor = (typeof opts.backgroundColor === "string") ? opts.backgroundColor : "";
+    const width = (typeof opts.width === "number" && opts.width >= 0) ? parseInt(opts.width) : null;
+    const height = (typeof opts.height === "number" && opts.height >= 0) ? parseInt(opts.height) : null;
+    const borderRadius = (typeof opts.borderRadius === "number" && opts.borderRadius >= 0) ? parseInt(opts.borderRadius) : null;
 
     this.on(dialogBox, eventType, evt => {
       evt = evt || window.event;
@@ -165,7 +154,7 @@ class Dialog {
   // 设置DialogBox居中
   setDialogBoxCenter() {
     const { ieVersion, dialogBox, dialogImg, dialogMask } = this;
-    let maskShow = (typeof this.opts.maskShow === "boolean") ? this.opts.maskShow : true;
+    const maskShow = (typeof this.opts.maskShow === "boolean") ? this.opts.maskShow : true;
 
     if(maskShow && !this.isSupportFlex) {
       this.dealClass(dialogMask, "dialog-mask-no-flex", "addClass");
@@ -173,7 +162,7 @@ class Dialog {
     else if(maskShow && this.isSupportFlex) {
       return;
     }
-    let setCenter = () => {
+    const setCenter = () => {
       const dialogBoxWidth = dialogBox.offsetWidth;
       const dialogBoxHeight = dialogBox.offsetHeight;
       const marginTop = -(dialogBoxHeight / 2) + "px";
@@ -196,9 +185,9 @@ class Dialog {
   }
   // 设置dialog字体
   setDialogContent(dialogContent) {
-    let color = (typeof this.opts.color === "string") ? this.opts.color : "#fff";
-    let textAlign = (typeof this.opts.textAlign === "string") ? this.opts.textAlign : "center";
-    let fontSize = (typeof this.opts.fontSize === "number" && this.opts.fontSize >= 0) ? parseInt(this.opts.fontSize) : null;
+    const color = (typeof this.opts.color === "string") ? this.opts.color : "#fff";
+    const textAlign = (typeof this.opts.textAlign === "string") ? this.opts.textAlign : "center";
+    const fontSize = (typeof this.opts.fontSize === "number" && this.opts.fontSize >= 0) ? parseInt(this.opts.fontSize) : null;
 
     if(color.trim() !== "#fff") {
       this.css(dialogContent, "color", color);
@@ -217,13 +206,13 @@ class Dialog {
   // 关闭
   close() {
     const { opts, dialogMask, dialogBox } = this;
-    let removeEle = opts.maskShow === true ? dialogMask : dialogBox;
+    const removeEle = opts.maskShow === true ? dialogMask : dialogBox;
 
     removeEle.parentNode.removeChild(removeEle);
   }
   // 创建按钮数组
   createButtons(dialogBox, btnArr) {
-    const { opts, eventType, dialogBtnsBox } = this;
+    const { eventType, dialogBtnsBox } = this;
     let btnArrLen = btnArr.length;
 
     dialogBtnsBox.className = "dialog-btns-box";
@@ -235,15 +224,15 @@ class Dialog {
       btnArrLen = btnArr.length;
       this.dealClass(dialogBtnsBox, "dialog-btns-box-3", "addClass");
     }
-    for(let [index, btn] of btnArr.entries()) {
-      let color = (typeof btn.color === "string") ? btn.color : "";
-      let callback = (typeof btn.callback === "function") ? btn.callback : null;
-      let backgroundColor = (typeof btn.backgroundColor === "string") ? btn.backgroundColor : "";
-      let width = (typeof btn.width === "number" && btn.width >= 0) ? parseInt(btn.width) : null;
-      let height = (typeof btn.height === "number" && btn.height >= 0) ? parseInt(btn.height) : null;
-      let fontSize = (typeof btn.fontSize === "number" && btn.fontSize >= 0) ? parseInt(btn.fontSize) : null;
-      let borderRadius = (typeof btn.borderRadius === "number" && btn.borderRadius >= 0) ? parseInt(btn.borderRadius) : null;
-      let dialogBtn = document.createElement("span");
+    for(const [index, btn] of btnArr.entries()) {
+      const color = (typeof btn.color === "string") ? btn.color : "";
+      const callback = (typeof btn.callback === "function") ? btn.callback : null;
+      const backgroundColor = (typeof btn.backgroundColor === "string") ? btn.backgroundColor : "";
+      const width = (typeof btn.width === "number" && btn.width >= 0) ? parseInt(btn.width) : null;
+      const height = (typeof btn.height === "number" && btn.height >= 0) ? parseInt(btn.height) : null;
+      const fontSize = (typeof btn.fontSize === "number" && btn.fontSize >= 0) ? parseInt(btn.fontSize) : null;
+      const borderRadius = (typeof btn.borderRadius === "number" && btn.borderRadius >= 0) ? parseInt(btn.borderRadius) : null;
+      const dialogBtn = document.createElement("span");
 
       dialogBtn.className = `dialog-btn${index + 1}`;
       dialogBtn.textContent = btn.text;
@@ -284,7 +273,7 @@ class Dialog {
     const eventList = eventStrs.split(" ");
 
     if(typeof callback === "function") {
-      for(let event of eventList) {
+      for(const event of eventList) {
         if(document.addEventListener) {
           ele.addEventListener(event, callback);
         }
@@ -305,7 +294,7 @@ class Dialog {
     }
     // 处理类似(ele, {position: "absolue", width: "100px"})的情况
     if(styles && typeof styles === "object") {
-      for(let styleProp in styles) {
+      for(const styleProp in styles) {
         stylePrefixProp = this.prefix(styleProp);
         ele.style[stylePrefixProp] = styles[styleProp];
       }
@@ -324,7 +313,7 @@ class Dialog {
 
     let eleClass = ele.className;
     const classList = classStrs.split(" ");
-    for(let className of classList) {
+    for(const className of classList) {
       if(type === "addClass") {
         if(!eleClass.includes(className)) {
           eleClass += " " + className;
@@ -332,7 +321,7 @@ class Dialog {
       }
       else {
         if(eleClass.includes(className)) {
-          let reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+          const reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
           eleClass = eleClass.replace(reg, "");
         }
       }
@@ -342,20 +331,25 @@ class Dialog {
   }
   // 自定义扩展参数
   extend(...args) {
-    let options, name, src, copy, copyIsArray, clone,
-      target = args[0] || {},
-      i = 1,
-      length = args.length,
-      deep = false;
+    let options;
+    let name;
+    let src;
+    let copy;
+    let copyIsArray;
+    let clone;
+    let target = args[0] || {};
+    let i = 1;
+    const length = args.length;
+    let deep = false;
 
-    // 处理深度拷贝情况(第一个参数是boolean类型且为true) 
+    // 处理深度拷贝情况(第一个参数是boolean类型且为true)
     if(typeof target === "boolean") {
       deep = target;
       target = args[i] || {};
-      // 跳过第一个参数(是否深度拷贝)和第二个参数(目标对象)  
+      // 跳过第一个参数(是否深度拷贝)和第二个参数(目标对象)
       i++;
     }
-    // 如果目标不是对象或函数, 则初始化为空对象  
+    // 如果目标不是对象或函数, 则初始化为空对象
     if(typeof target !== "object" && typeof target !== "function") {
       target = {};
     }
@@ -367,31 +361,30 @@ class Dialog {
 
     for(; i < length; i++) {
       if((options = args[i]) !== null) {
-        // Extend the base object  
+        // Extend the base object
         for(name in options) {
           src = target[name];
           copy = options[name];
           if(target === copy) {
             continue;
           }
-          // 如果对象中包含了数组或者其他对象, 则使用递归进行拷贝  
+          // 如果对象中包含了数组或者其他对象, 则使用递归进行拷贝
           copyIsArray = Array.isArray(copy);
           if(deep && copy && (typeof copy === "object" || copyIsArray)) {
             // if(deep && copy && (typeof copy === "object" || (copyIsArray = Array.isArray(copy)))) {
-            // 处理数组  
+            // 处理数组
             if(copyIsArray) {
               copyIsArray = false;
-              // 如果目标对象不存在该数组, 则创建一个空数组；  
+              // 如果目标对象不存在该数组, 则创建一个空数组
               clone = src && Array.isArray(src) ? src : [];
             }
             else {
               clone = src && typeof src === "object" ? src : {};
             }
-            // 从不改变原始对象, 只做拷贝  
+            // 从不改变原始对象, 只做拷贝
             target[name] = this.extend(deep, clone, copy);
-
           }
-          // 不拷贝undefined值  
+          // 不拷贝undefined值
           else if(copy !== undefined) {
             target[name] = copy;
           }
@@ -409,7 +402,7 @@ class Dialog {
     if(style[prop] !== undefined) return prop;
 
     prop = prop.charAt(0).toUpperCase() + prop.substr(1);
-    for(let prefix of prefixes) {
+    for(const prefix of prefixes) {
       prefixeProp = prefix + prop;
       if(style[prefixeProp] !== undefined) {
         return prefixeProp;
@@ -421,7 +414,7 @@ class Dialog {
   judgePlatform() {
     const userAgent = navigator.userAgent.toLowerCase();
     const agents = ["android", "iphone", "symbianos", "windows phone", "ipad", "ipod"];
-    for(let agent of agents) {
+    for(const agent of agents) {
       if(userAgent.includes(agent)) {
         return "mobile";
       }
