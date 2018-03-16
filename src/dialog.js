@@ -4,9 +4,9 @@ import './dialog.scss';
 } */
 class Dialog {
   constructor(opts) {
-    if(!(this instanceof Dialog)) {
+    /* if(!(this instanceof Dialog)) {
       return this;
-    }
+    } */
     this.defaults = {
       imgSrc: "",                           // 图片的路径(String), default: ""
       delay: null,                          // 多少秒后自动关闭(Number), default: null
