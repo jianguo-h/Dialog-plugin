@@ -18,19 +18,12 @@ module.exports = {
           path.resolve(__dirname, '../dist'),
           path.resolve(__dirname, '../node_modules'),
         ],
-        use: [
-          {
-            loader: 'eslint-loader',
-            /* options: {
-              formatter: require('eslint-friendly-formatter')
-            } */
-          }
-        ]
+        use: ['eslint-loader']
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        use: 'babel-loader'
       },
       {
         test: /\.(png|jpg|gif)$/,
