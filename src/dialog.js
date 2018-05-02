@@ -9,9 +9,18 @@
   </div>
 </div> */
 import './dialog.scss';
+// Dialog 默认参数
+const defaults = {
+  message: '',            // 提示的内容, default: ""
+  mask: true,             // 是否需要遮罩层, default: true
+  maskClose: true,        // 点击遮罩层是否关闭(maskShow为true时方有效), default: true
+  confirmText: '确定',    // 确定按钮的文字, default: '确定'
+  cancelText: '取消'      // 取消按钮的文字, default: '取消'
+}
 class Dialog {
   constructor(opts) {
     console.log('>>>> opts', opts);
+    this.defaults = defaults;
   }
 }
 
