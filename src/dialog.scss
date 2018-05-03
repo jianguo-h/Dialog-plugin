@@ -32,9 +32,9 @@ html, body, div, span, p, button, img {
 		background-color: rgba(55, 55, 55, .6);
 	}
 	.dialog-box {
-		width: 70%;
+		// max-width: 70%;
 		color: #fff;
-		padding: 4% 0;
+		// padding: 4% 0;
 		text-align: center;
 		border-radius: 4px;
 		background-color: #000;
@@ -46,12 +46,34 @@ html, body, div, span, p, button, img {
 			animation: gradientHide .3s ease forwards;
 		} */
 		.dialog-content {
-			.dialog-img {
+			/* .dialog-img {
 				height: auto;
 				padding-bottom: 4%;
+			} */
+			display: flex;
+			align-items: center;
+			padding: 10px;
+			.icon-success, .icon-warning, .icon-error {
+				width: 16px;
+				height: 16px;
+				margin-right: 10px;
+				display: inline-block;
+				background-position: center;
+				background-repeat: no-repeat;
+			}
+			.icon-success {
+				background-image: url(/static/images/icon-success.png);
+			}
+			.icon-warning {
+				background-image: url(/static/images/icon-warning.png);
+			}
+			.icon-error {
+				background-image: url(/static/images/icon-error.png);
 			}
 			.dialog-message {
-
+				max-width: 300px;
+				font-size: 14px;
+				line-height: 2;
 			}
 		}
 		.dialog-footer {
