@@ -17,6 +17,7 @@ module.exports = {
 		'no-new': 0,
 		'no-var': 2,
 		'eol-last': 0,
+		'no-debugger': 0,
 		'brace-style': 0,
 		'prefer-const': 2,
 		'comma-dangle': 2,      // 禁止结尾有多余的逗号
@@ -26,6 +27,7 @@ module.exports = {
 		'keyword-spacing': 0,
 		'indent': ['error', 2],
 		'no-useless-return': 0,
+		'object-property-newline': 0,
 		'space-before-function-paren': 0,
 	}
 }
