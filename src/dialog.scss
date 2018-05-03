@@ -11,77 +11,90 @@ html, body, div, span, p, button, img {
 	line-height: 36px;
 	border-radius: 4px;
 }
-/* 遮罩层 */
-.dialog-mask {
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 100;
-	position: fixed;
-	background-color: rgba(0, 0, 0, .5);
+.dialog-wrap {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-/* 对话框 */
-.dialog-box {
-	width: 70%;
-	color: #fff;
-	padding: 4% 0;
-	text-align: center;
-	border-radius: 4px;
-	background-color: #000;
-	&.gradientShow {
-		animation: gradientShow .3s ease forwards;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	height: 100%;
+	position: fixed;
+	.dialog-mask {
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		height: 100%;
+		z-index: 9999;
+		position: fixed;
+		background-color: rgba(55, 55, 55, .6);
 	}
-	/* &.gradientHide {
-		animation: gradientHide .3s ease forwards;
-	} */
-	.dialog-img {
-		height: auto;
-		padding-bottom: 4%;
-	}
-	.dialog-btns-box {
-		padding: 6% 5% 0;
-		display: flex;
-		justify-content: space-between;
-		.dialog-btn1, .dialog-btn2, .dialog-btn3 {
-			@extend .btn;
+	.dialog-box {
+		width: 70%;
+		color: #fff;
+		padding: 4% 0;
+		text-align: center;
+		border-radius: 4px;
+		background-color: #000;
+		z-index: 10000;
+		&.gradientShow {
+			animation: gradientShow .3s ease forwards;
 		}
-		.dialog-btn1 { background-color: #2fc295; }
-		.dialog-btn2 { background-color: #e34b4f; }
-		.dialog-btn3 { background-color: #d2be15; }
-	}
-	.dialog-btns-box-1 {
-		justify-content: center;
-		.dialog-btn1 {
-			width: 100%;
-			background-color: #25a1e9;
+		/* &.gradientHide {
+			animation: gradientHide .3s ease forwards;
+		} */
+		.dialog-content {
+			.dialog-img {
+				height: auto;
+				padding-bottom: 4%;
+			}
+			.dialog-message {
+
+			}
 		}
-	}
-	.dialog-btns-box-3 {
-		.dialog-btn1, .dialog-btn2, .dialog-btn3 {
-			width: 30%;
-			font-size: 12px;
+		.dialog-footer {
+			padding: 6% 5% 0;
+			display: flex;
+			justify-content: space-between;
+			.dialog-cancel-btn, .dialog-confirm-btn, .dialog-btn3 {
+				@extend .btn;
+			}
+			.dialog-cancel-btn { background-color: #2fc295; }
+			.dialog-confirm-btn { background-color: #e34b4f; }
+			.dialog-btn3 { background-color: #d2be15; }
+		}
+		.dialog-footer-1 {
+			justify-content: center;
+			.dialog-cancel-btn {
+				width: 100%;
+				background-color: #25a1e9;
+			}
+		}
+		.dialog-footer-3 {
+			.dialog-cancel-btn, .dialog-confirm-btn, .dialog-btn3 {
+				width: 30%;
+				font-size: 12px;
+			}
 		}
 	}
 }
 .dialog-box-no-flex {
-	.dialog-btns-box {
-		.dialog-btn1, .dialog-btn2, .dialog-btn3 {
+	.dialog-footer {
+		.dialog-cancel-btn, .dialog-confirm-btn, .dialog-btn3 {
 			display: inline-block;
 		}
-		.dialog-btn1 { float: left; }
-		.dialog-btn2 { float: right; }
+		.dialog-cancel-btn { float: left; }
+		.dialog-confirm-btn { float: right; }
 	}
-	.dialog-btns-box-1 {
-		.dialog-btn1 {
+	.dialog-footer-1 {
+		.dialog-cancel-btn {
 			float: initial;
 		}
 	}
-	.dialog-btns-box-3 {
-		.dialog-btn1, .dialog-btn2, .dialog-btn3 {
+	.dialog-footer-3 {
+		.dialog-cancel-btn, .dialog-confirm-btn, .dialog-btn3 {
 			width: 30%;
 			float: left;
 			font-size: 12px;
@@ -95,7 +108,7 @@ html, body, div, span, p, button, img {
 		position: absolute;
 		top: 50%;
 		left: 50%;
-		@extend .dialog-box-no-flex;
+		@extend .dialog-mask-no-flex;
 	}	
 }
 .dialog-box-pc {
