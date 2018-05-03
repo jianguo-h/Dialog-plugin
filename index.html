@@ -6,9 +6,25 @@
 	<title>dialog</title>
 </head>
 <body>
-	<button id = "test">测试dialog</button>
+	<!-- <button id = "test">测试dialog</button> -->
+	<div class="dialog-wrap">
+		<div class="dialog-mask"></div>
+		<div class="dialog-box dialog-box-pc gradientShow">
+			<div class="dialog-header">
+
+			</div>
+			<div class="dialog-content">
+				<img src="./static/images/right.png" class="dialog-img">
+				<p class="dialog-message">在这里填写您的信息</p>
+			</div>
+			<div class="dialog-footer">
+				<span class="dialog-cancel-btn">取消</span>
+				<span class="dialog-confirm-btn">确定</span>
+			</div>
+		</div>
+	</div>
 </body>
-<script>
+<!-- <script>
 	document.querySelector("#test").addEventListener("click", () => {
 		new Dialog({
 			imgSrc: "./static/images/right.png",
@@ -26,5 +42,5 @@
 			]
 		});
 	});
-</script>
+</script> -->
 </html>
