@@ -31,77 +31,113 @@ class Dialog {
   constructor(opts) {
     // console.log('>>>> opts', opts);
     this.defaults = defaults;
+    this.el = null;
   }
   confirm() {
 
   }
-  message() {
+  // 提示
+  message(opts) {
+    const params = {
+      duration: 3000,                      // 显示的时间, default: 3000
+      content: '这里放提示的内容',          // 提示的内容, default: ''
+      type: null,                          // 类型, 'success', 'warning' or 'error', default: null
+      mask: false,                         // 是否需要遮罩层, default: true
+      maskClose: false,                    // 点击遮罩层是否关闭(maskShow为true时方有效), default: true
+      callback: null,                      // duration后后执行的回调, 默认执行关闭, 若配置了callback需手动关闭
+      ...opts
+    }
+    const { duration, content, callback, type, mask, maskClose } = params;
     const vnode = {
       tag: 'div',
       props: {
         className: 'dialog-wrap'
       },
-      // children: null
       children: [
-        { tag: 'div', props: { className: 'dialog-mask' }, children: null },
+        mask ? {
+          tag: 'div',
+          props: {
+            className: 'dialog-mask',
+            on: {
+              click: () => {
+                if(maskClose) {
+                  this.close();
+                }
+              }
+            }
+          },
+          children: null
+        } : null,
         { tag: 'div', props: { className: 'dialog-box gradientShow' },
           children: [
             { tag: 'div', props: { className: 'dialog-content' },
               children: [
-                { tag: 'span', props: { className: 'icon-success' }, children: null },
-                { tag: 'p', props: { className: 'dialog-message' }, children: '在这里填写您的信息' }
+                type ? { tag: 'span', props: { className: 'icon-' + type }, children: null } : null,
+                { tag: 'p', props: { className: 'dialog-message' }, children: content }
               ]
             }
           ]
         }
       ]
     };
-    this.render(vnode);
+    const el = this.createElement(vnode);
+    this.mounted(el);
+    setTimeout(() => {
+      if(!callback) {
+        this.close();
+      }
+      else {
+        callback();
+      }
+    }, duration);
   }
   alert() {
 
   }
+  // 关闭
   close() {
-
+    const dialogEl = document.querySelector('.dialog-wrap');
+    dialogEl.parentNode.removeChild(dialogEl);
   }
-  render(vnode) {
+  // 生成真实dom
+  createElement(vnode) {
     if(type(vnode) !== 'object') {
       console.error('vnode is not an object', vnode);
       return;
     }
-    let node;
+
+    let el;
     const { tag, props, children } = vnode;
     const childrenType = type(children);
     const nodeType = judgeNodeType(vnode);
-    // debugger;
-    console.log('>>>>> nodeType', nodeType);
     if(nodeType === TEXT_NODE) {
-      node = createTextNode(children);
+      el = createTextNode(children);
     }
     else if(nodeType === EMPTY_NODE) {
-      node = createEmptyNode(tag, props);
+      el = createEmptyNode(tag, props);
     }
     else {
-      // debugger;
-      node = createEmptyNode(tag);
+      el = createEmptyNode(tag, props);
       let childNode;
       if(childrenType === 'array') {
         for(const child of children) {
-          childNode = this.render(child);
-          node.appendChild(childNode)
+          if(child) {
+            childNode = this.createElement(child);
+            el.appendChild(childNode)
+          }
         }
       }
       else if(childrenType === 'string' || childrenType === 'number') {
         childNode = createTextNode(children);
-        node.appendChild(childNode);
+        el.appendChild(childNode);
       }
     }
 
-    console.log('>>>>> node', node);
-    return node;
+    return el;
   }
-  mounted() {
-    document.body.appendChild();
+  // 将真实dom挂载到body上
+  mounted(el) {
+    document.body.appendChild(el);
   }
 }
 
