@@ -45,10 +45,10 @@ class Dialog {
       callback: null,                      // duration后后执行的回调, 默认执行关闭, 若配置了callback需手动关闭
       ...opts
     }
-    let { duration, content, callback, type } = params;
+    let { duration, content, callback, type: iconType } = params;
     duration = (type(duration) === 'number' && !Number.isNaN(duration) && duration > 0) ? duration : 3000;
-    content = type(content) === 'number' ? content : '这里放提示的内容';
-    type = ['success', 'warning', 'error'].includes(type) ? type : null;
+    content = type(content) === 'string' ? content : '这里放提示的内容';
+    iconType = ['success', 'warning', 'error'].includes(iconType) ? iconType : null;
     callback = type(callback) === 'function' ? callback : null;
 
     const vnode = {
@@ -61,7 +61,7 @@ class Dialog {
           children: [
             { tag: 'div', props: { className: 'dialog-content' },
               children: [
-                type ? { tag: 'span', props: { className: 'icon-' + type }, children: null } : null,
+                iconType ? { tag: 'span', props: { className: 'icon-' + iconType }, children: null } : null,
                 { tag: 'p', props: { className: 'dialog-message' }, children: content }
               ]
             }
