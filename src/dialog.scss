@@ -4,10 +4,11 @@ html, body, div, span, p, button, img {
 	outline: none;
 }
 
-.dialog-wrap {
+@mixin dialog-wrap {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	color: #333;
 	&, .dialog-mask {
 		left: 0;
 		top: 0;
@@ -21,11 +22,9 @@ html, body, div, span, p, button, img {
 		background-color: rgba(55, 55, 55, .6);
 	}
 	.dialog-box {
-		color: #fff;
-		text-align: center;
 		border-radius: 4px;
-		background-color: rgba(0, 0, 0, .65);
 		z-index: 10000;
+		overflow: hidden;
 		&.gradientShow {
 			animation: gradientShow .3s ease forwards;
 		}
@@ -33,13 +32,7 @@ html, body, div, span, p, button, img {
 			animation: gradientHide .3s ease forwards;
 		} */
 		.dialog-content {
-			/* .dialog-img {
-				height: auto;
-				padding-bottom: 4%;
-			} */
 			display: flex;
-			align-items: center;
-			padding: 10px;
 			.icon-success, .icon-warning, .icon-error {
 				width: 16px;
 				height: 16px;
@@ -58,44 +51,65 @@ html, body, div, span, p, button, img {
 				background-image: url(/static/images/icon-error.png);
 			}
 			.dialog-message {
-				max-width: 300px;
+				max-width: 200px;
 				font-size: 14px;
 				line-height: 2;
+				text-align: center;
 			}
 		}
 		.dialog-footer {
-			padding: 6% 5% 0;
 			display: flex;
-			justify-content: space-between;
-			.dialog-cancel-btn, .dialog-confirm-btn, .dialog-btn3 {
-				width: 47.5%;
-				display: block;
+			border-top: 1px solid #eee;
+			.dialog-cancel-btn, .dialog-confirm-btn {
+				display: inline-block;
 				cursor: pointer;
-				line-height: 36px;
-				border-radius: 4px;
+				height: 40px;
+				line-height: 40px;
+				// border-radius: 4px;
 			}
-			.dialog-cancel-btn { background-color: #2fc295; }
-			.dialog-confirm-btn { background-color: #e34b4f; }
-			.dialog-btn3 { background-color: #d2be15; }
+			// .dialog-cancel-btn { background-color: #2fc295; }
+			// .dialog-confirm-btn { background-color: #e34b4f; }
 		}
-		.dialog-footer-1 {
+	}
+}
+
+// 提示信息样式
+.dialog-message-wrap {
+	@include dialog-wrap;
+	.dialog-box {
+		color: #fff;
+		background-color: rgba(0, 0, 0, .65);
+		.dialog-content { 
+			align-items: center;
+			padding: 10px;
+		}
+		
+	}
+}
+
+// 信息框样式
+.dialog-alert-wrap {
+	@include dialog-wrap;
+	.dialog-box {
+		width: 80%;
+		background-color: #fff;
+		.dialog-content { 
+			padding: 30px 20px;
 			justify-content: center;
-			.dialog-cancel-btn {
-				width: 100%;
-				background-color: #25a1e9;
-			}
 		}
-		.dialog-footer-3 {
-			.dialog-cancel-btn, .dialog-confirm-btn, .dialog-btn3 {
-				width: 30%;
-				font-size: 12px;
+		.dialog-footer {
+			.dialog-confirm-btn {
+				flex: 1;
+				text-align: center;
+				color: #25a1e9;
 			}
 		}
 	}
 }
+
 .dialog-box-no-flex {
 	.dialog-footer {
-		.dialog-cancel-btn, .dialog-confirm-btn, .dialog-btn3 {
+		.dialog-cancel-btn, .dialog-confirm-btn {
 			display: inline-block;
 		}
 		.dialog-cancel-btn { float: left; }
@@ -105,15 +119,6 @@ html, body, div, span, p, button, img {
 		.dialog-cancel-btn {
 			float: initial;
 		}
-	}
-	.dialog-footer-3 {
-		.dialog-cancel-btn, .dialog-confirm-btn, .dialog-btn3 {
-			width: 30%;
-			float: left;
-			font-size: 12px;
-			margin-right: 5%;
-		}
-		.dialog-btn3 { margin-right: 0; }
 	}
 }
 .dialog-mask-no-flex {

@@ -54,7 +54,7 @@ class Dialog {
     const vnode = {
       tag: 'div',
       props: {
-        className: 'dialog-wrap'
+        className: 'dialog-message-wrap'
       },
       children: [
         { tag: 'div', props: { className: 'dialog-box gradientShow' },
@@ -80,8 +80,76 @@ class Dialog {
       }
     }, duration);
   }
-  alert() {
+  // 信息框
+  alert(opts) {
+    const params = {
+      maskClose: true,                     // 点击遮罩层是否关闭(maskShow为true时方有效), default: true
+      content: '这里放提示的内容',          // 提示的内容, default: '这里放提示的内容'
+      confirmText: '确定',                 // 确定按钮的文字, default: '确定'
+      onConfirm: null,                     // 点击确定的回调, default: null, 配置了该参数需手动关闭
+      ...opts
+    }
+    let { confirmText, content, onConfirm, maskClose } = params;
+    maskClose = type(maskClose) === 'boolean' ? maskClose : true;
+    content = type(content) === 'string' ? content : '这里放提示的内容';
+    confirmText = type(confirmText) === 'string' ? confirmText : '确定';
+    onConfirm = type(onConfirm) === 'function' ? onConfirm : null;
 
+    const vnode = {
+      tag: 'div',
+      props: {
+        className: 'dialog-alert-wrap'
+      },
+      children: [
+        {
+          tag: 'div',
+          props: {
+            className: 'dialog-mask',
+            on: {
+              click: () => {
+                console.log('>>>close', maskClose);
+                if(maskClose) {
+                  this.close();
+                }
+              }
+            }
+          },
+          children: null
+        },
+        { tag: 'div', props: { className: 'dialog-box gradientShow' },
+          children: [
+            { tag: 'div', props: { className: 'dialog-content' },
+              children: [
+                { tag: 'p', props: { className: 'dialog-message' }, children: content }
+              ]
+            },
+            { tag: 'div', props: { className: 'dialog-footer' },
+              children: [
+                {
+                  tag: 'span',
+                  props: {
+                    className: 'dialog-confirm-btn',
+                    on: {
+                      click: () => {
+                        console.log('>>>> onConfirm', onConfirm);
+                        if(onConfirm) {
+                          onConfirm();
+                        }
+                        else {
+                          this.close();
+                        }
+                      }
+                    }
+                  },
+                  children: confirmText }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+    const el = this.createElement(vnode);
+    this.mounted(el);
   }
   // 关闭
   close() {
