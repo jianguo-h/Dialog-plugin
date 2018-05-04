@@ -4,40 +4,27 @@ html, body, div, span, p, button, img {
 	outline: none;
 }
 
-.btn {
-	width: 47.5%;
-	display: block;
-	cursor: pointer;
-	line-height: 36px;
-	border-radius: 4px;
-}
 .dialog-wrap {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	left: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	height: 100%;
-	position: fixed;
-	.dialog-mask {
+	&, .dialog-mask {
 		left: 0;
-		right: 0;
 		top: 0;
+		right: 0;
 		bottom: 0;
 		height: 100%;
-		z-index: 9999;
 		position: fixed;
+	}
+	.dialog-mask {
+		z-index: 9999;
 		background-color: rgba(55, 55, 55, .6);
 	}
 	.dialog-box {
-		// max-width: 70%;
 		color: #fff;
-		// padding: 4% 0;
 		text-align: center;
 		border-radius: 4px;
-		background-color: #000;
+		background-color: rgba(0, 0, 0, .65);
 		z-index: 10000;
 		&.gradientShow {
 			animation: gradientShow .3s ease forwards;
@@ -81,7 +68,11 @@ html, body, div, span, p, button, img {
 			display: flex;
 			justify-content: space-between;
 			.dialog-cancel-btn, .dialog-confirm-btn, .dialog-btn3 {
-				@extend .btn;
+				width: 47.5%;
+				display: block;
+				cursor: pointer;
+				line-height: 36px;
+				border-radius: 4px;
 			}
 			.dialog-cancel-btn { background-color: #2fc295; }
 			.dialog-confirm-btn { background-color: #e34b4f; }
