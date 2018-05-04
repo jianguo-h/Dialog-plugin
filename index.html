@@ -28,7 +28,17 @@
 <script>
 	document.querySelector("#test").addEventListener("click", () => {
 		const dialog = new Dialog();
-		dialog.message();
+		dialog.message({
+			type: 'success',
+			content: '测试。哈哈哈',
+			maskClose: false,
+			mask: true,
+			duration: 3000,
+			callback: function() {
+				// console.log('>>>>>>>>>>>> callback', this);
+				dialog.close();
+			}
+		});
 		// console.log('>>> dialog', dialog)
 	});
 </script>
