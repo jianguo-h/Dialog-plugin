@@ -25,6 +25,7 @@ html, body, div, span, p, button, img {
 		border-radius: 4px;
 		z-index: 10000;
 		overflow: hidden;
+		max-width: 300px;
 		&.gradientShow {
 			animation: gradientShow .3s ease forwards;
 		}
@@ -61,14 +62,15 @@ html, body, div, span, p, button, img {
 			display: flex;
 			border-top: 1px solid #eee;
 			.dialog-cancel-btn, .dialog-confirm-btn {
+				flex: 1;
 				display: inline-block;
 				cursor: pointer;
 				height: 40px;
 				line-height: 40px;
-				// border-radius: 4px;
+				text-align: center;
 			}
-			// .dialog-cancel-btn { background-color: #2fc295; }
-			// .dialog-confirm-btn { background-color: #e34b4f; }
+			.dialog-cancel-btn { border-right: 1px solid #eee; }
+			.dialog-confirm-btn { color: #25a1e9; }
 		}
 	}
 }
@@ -97,14 +99,12 @@ html, body, div, span, p, button, img {
 			padding: 30px 20px;
 			justify-content: center;
 		}
-		.dialog-footer {
-			.dialog-confirm-btn {
-				flex: 1;
-				text-align: center;
-				color: #25a1e9;
-			}
-		}
 	}
+}
+
+// 确认模态框
+.dialog-confirm-wrap {
+	@extend .dialog-alert-wrap;
 }
 
 .dialog-box-no-flex {
