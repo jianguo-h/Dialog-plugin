@@ -31,7 +31,7 @@ class Dialog {
       ...this.defaults,
       ...opts
     }
-    this.el = null;
+    this.dialogClass = '';
   }
   confirm() {
 
@@ -51,10 +51,11 @@ class Dialog {
     iconType = ['success', 'warning', 'error'].includes(iconType) ? iconType : null;
     callback = type(callback) === 'function' ? callback : null;
 
+    this.dialogClass = 'dialog-message-wrap';
     const vnode = {
       tag: 'div',
       props: {
-        className: 'dialog-message-wrap'
+        className: this.dialogClass
       },
       children: [
         { tag: 'div', props: { className: 'dialog-box gradientShow' },
@@ -95,10 +96,11 @@ class Dialog {
     confirmText = type(confirmText) === 'string' ? confirmText : '确定';
     onConfirm = type(onConfirm) === 'function' ? onConfirm : null;
 
+    this.dialogClass = 'dialog-alert-wrap';
     const vnode = {
       tag: 'div',
       props: {
-        className: 'dialog-alert-wrap'
+        className: this.dialogClass
       },
       children: [
         {
@@ -107,7 +109,6 @@ class Dialog {
             className: 'dialog-mask',
             on: {
               click: () => {
-                console.log('>>>close', maskClose);
                 if(maskClose) {
                   this.close();
                 }
@@ -131,7 +132,6 @@ class Dialog {
                     className: 'dialog-confirm-btn',
                     on: {
                       click: () => {
-                        console.log('>>>> onConfirm', onConfirm);
                         if(onConfirm) {
                           onConfirm();
                         }
@@ -153,7 +153,7 @@ class Dialog {
   }
   // 关闭
   close() {
-    const dialogEl = document.querySelector('.dialog-wrap');
+    const dialogEl = document.querySelector('.' + this.dialogClass);
     if(dialogEl) {
       dialogEl.parentNode.removeChild(dialogEl);
     }
