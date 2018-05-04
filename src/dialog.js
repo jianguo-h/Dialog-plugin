@@ -16,7 +16,7 @@
 */
 import {
   type, TEXT_NODE, EMPTY_NODE, /*  ELEMENT_NODE, */
-  judgeNodeType, createTextNode, createEmptyNode
+  judgeNodeType, createTextNode, createEmptyNode, setProps
 } from './utils';
 import './dialog.scss';
 
@@ -132,26 +132,34 @@ class Dialog {
     callback = type(callback) === 'function' ? callback : null;
 
     this.dialogClass = 'dialog-message-wrap';
+    this.close();       // 关闭上一个
     const vnode = {
       tag: 'div',
       props: {
-        className: this.dialogClass
+        className: this.dialogClass + ' gradientShow'
       },
       children: [
-        { tag: 'div', props: { className: 'dialog-box gradientShow' },
+        {
+          tag: 'div', props: { className: 'dialog-content' },
           children: [
-            { tag: 'div', props: { className: 'dialog-content' },
-              children: [
-                iconType ? { tag: 'span', props: { className: 'icon-' + iconType }, children: null } : null,
-                { tag: 'p', props: { className: 'dialog-message' }, children: content }
-              ]
-            }
+            iconType ? { tag: 'span', props: { className: 'icon-' + iconType }, children: null } : null,
+            { tag: 'p', props: { className: 'dialog-message' }, children: content }
           ]
         }
       ]
     };
     const el = this.createElement(vnode);
     this.mounted(el);
+    // 设置居中
+    const { offsetWidth, offsetHeight } = el;
+    const props = {
+      style: {
+        marginLeft: -1 * Math.round(offsetWidth / 2) + 'px',
+        marginTop: -1 * Math.round(offsetHeight / 2) + 'px'
+      }
+    }
+    setProps(el, props);
+
     setTimeout(() => {
       if(!callback) {
         this.close();
