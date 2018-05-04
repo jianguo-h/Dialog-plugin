@@ -7,14 +7,13 @@
 </head>
 <body>
 	<button id = "test">测试dialog</button>
-	<!-- <div class="dialog-wrap">
+	<!-- <div class="dialog-alert-wrap">
 		<div class="dialog-mask"></div>
 		<div class="dialog-box gradientShow">
 			<div class="dialog-header">
 
 			</div>
 			<div class="dialog-content">
-				<img src="./static/images/right.png" class="dialog-img">
 				<span class = 'icon-success'></span>
 				<p class="dialog-message">在这里填写您的信息</p>
 			</div>
@@ -28,16 +27,17 @@
 <script>
 	const dialog = new Dialog();
 	document.querySelector("#test").addEventListener("click", () => {
-		dialog.message({
+		dialog.alert({
+			maskClose: true
+		});
+		/* dialog.message({
 			type: 'success',
-			content: '测试。哈哈哈',
+			content: '测试。哈哈哈测试。哈哈哈测试。哈哈哈测试。哈哈哈测试。哈哈哈测试。哈哈哈测试。哈哈哈测试。哈哈哈',
 			duration: 3000,
 			callback: function() {
-				// console.log('>>>>>>>>>>>> callback', this);
 				dialog.close();
 			}
-		});
-		// console.log('>>> dialog', dialog)
+		}); */
 	});
 </script>
 </html>
