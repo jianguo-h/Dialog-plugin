@@ -40,7 +40,7 @@ export const createEmptyNode = (tag, props) => {
 }
 
 // 设置节点的属性
-const setProps = (node, props) => {
+export const setProps = (node, props) => {
   for(const [key, val] of Object.entries(props)) {
     if(key === 'className') {
       node.setAttribute('class', val);
