@@ -10,6 +10,7 @@ export const TEXT_NODE = 'text_node';
 export const EMPTY_NODE = 'empty_node';
 export const ELEMENT_NODE = 'element_node';
 
+// 判断一个vnode的类型
 export const judgeNodeType = vnode => {
   const { tag, children } = vnode;
 
@@ -24,10 +25,12 @@ export const judgeNodeType = vnode => {
   }
 }
 
+// 创建一个文本节点
 export const createTextNode = val => {
   return document.createTextNode(val);
 }
 
+// 创建一个空节点
 export const createEmptyNode = (tag, props) => {
   const node = document.createElement(tag);
   if(!props) {
@@ -36,23 +39,26 @@ export const createEmptyNode = (tag, props) => {
   return setProps(node, props);
 }
 
+// 设置节点的属性
 const setProps = (node, props) => {
   for(const [key, val] of Object.entries(props)) {
-    if(type(val) === 'object') {
-      setProps(node, val);
+    if(key === 'className') {
+      node.setAttribute('class', val);
     }
-    else {
-      if(key === 'className') {
-        node.setAttribute('class', val);
-      }
-      else if(key === 'on') {
-        for(const [event, cb] of Object.entries(val)) {
+    else if(key === 'on') {
+      for(const [event, cb] of Object.entries(val)) {
+        if(type(cb) === 'function') {
           node['on' + event] = cb;
         }
       }
-      else {
-        node.setAttribute(key, val);
+    }
+    else if(key === 'style') {
+      for(const [property, value] of Object.entries(val)) {
+        node.style[property] = value;
       }
+    }
+    else {
+      node.setAttribute(key, val);
     }
   }
   return node;
