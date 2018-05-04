@@ -19,18 +19,18 @@ import {
   judgeNodeType, createTextNode, createEmptyNode
 } from './utils';
 import './dialog.scss';
-// Dialog 默认参数
-const defaults = {
-  message: '',            // 提示的内容, default: ""
-  mask: true,             // 是否需要遮罩层, default: true
-  maskClose: true,        // 点击遮罩层是否关闭(maskShow为true时方有效), default: true
-  confirmText: '确定',    // 确定按钮的文字, default: '确定'
-  cancelText: '取消'      // 取消按钮的文字, default: '取消'
-}
+
 class Dialog {
   constructor(opts) {
-    // console.log('>>>> opts', opts);
-    this.defaults = defaults;
+    this.defaults = {
+      duration: 3000,         // 显示的时间, default: 3000
+      mask: true,             // 是否需要遮罩层, default: true
+      maskClose: true         // 点击遮罩层是否关闭(maskShow为true时方有效), default: true
+    };
+    this.opts = {
+      ...this.defaults,
+      ...opts
+    }
     this.el = null;
   }
   confirm() {
@@ -42,32 +42,21 @@ class Dialog {
       duration: 3000,                      // 显示的时间, default: 3000
       content: '这里放提示的内容',          // 提示的内容, default: ''
       type: null,                          // 类型, 'success', 'warning' or 'error', default: null
-      mask: false,                         // 是否需要遮罩层, default: true
-      maskClose: false,                    // 点击遮罩层是否关闭(maskShow为true时方有效), default: true
       callback: null,                      // duration后后执行的回调, 默认执行关闭, 若配置了callback需手动关闭
       ...opts
     }
-    const { duration, content, callback, type, mask, maskClose } = params;
+    let { duration, content, callback, type } = params;
+    duration = (type(duration) === 'number' && !Number.isNaN(duration) && duration > 0) ? duration : 3000;
+    content = type(content) === 'number' ? content : '这里放提示的内容';
+    type = ['success', 'warning', 'error'].includes(type) ? type : null;
+    callback = type(callback) === 'function' ? callback : null;
+
     const vnode = {
       tag: 'div',
       props: {
         className: 'dialog-wrap'
       },
       children: [
-        mask ? {
-          tag: 'div',
-          props: {
-            className: 'dialog-mask',
-            on: {
-              click: () => {
-                if(maskClose) {
-                  this.close();
-                }
-              }
-            }
-          },
-          children: null
-        } : null,
         { tag: 'div', props: { className: 'dialog-box gradientShow' },
           children: [
             { tag: 'div', props: { className: 'dialog-content' },
@@ -97,7 +86,9 @@ class Dialog {
   // 关闭
   close() {
     const dialogEl = document.querySelector('.dialog-wrap');
-    dialogEl.parentNode.removeChild(dialogEl);
+    if(dialogEl) {
+      dialogEl.parentNode.removeChild(dialogEl);
+    }
   }
   // 生成真实dom
   createElement(vnode) {
