@@ -2,8 +2,10 @@
 
 >  一款移动端和PC端通用的弹出层插件
 
-``` bash
 ## Build Setup ##
+``` bash
+
+# git clone https://github.com/jianguo-h/Dialog-plugin.git
 
 # 1.install dependencies
 npm install（npm i）
@@ -13,11 +15,12 @@ npm run dev
 
 # 3.build for production with minification
 npm run build
+
 ```
 
 ## 简介 ##
 ### 插件说明 ###
->一款能代替浏览器自带弹出层的插件，应该能满足当前web开发中的常见需求，暂未兼容老版本刘安琪，使用es6写的，故需要按以下方式引用（间下方调用方式），而具体的可根据需求去配置参数
+>一款能代替浏览器自带弹出层的插件，应该能满足当前web开发中的常见需求，暂未兼容老版本浏览器，使用es6写的，故需要按以下方式引用（间下方调用方式），而具体的可根据需求去配置参数
 
 ### 参数说明 ###
 **message**方法，传入一个对象，包含以下属性
@@ -169,6 +172,18 @@ npm run build
     </tr>
   </tbody>
 </table>
+
+**close**方法可手动关闭, 例如下列方式点击确定按钮后1s后会进行关闭
+```
+const dialog = new Dialog();
+dialog.confirm({
+  onConfirm: () => {
+    setTimeout(() => {
+      dialog.close();
+    }, 1000)
+  }
+});
+```
 
 ### 调用方式 ###
 es6 环境下使用如下方式，但是要注意**引入的路径**根据您自己的项目目录进行调整
