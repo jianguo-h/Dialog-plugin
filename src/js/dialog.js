@@ -16,9 +16,12 @@
 */
 import {
   type, TEXT_NODE, EMPTY_NODE, /*  ELEMENT_NODE, */
-  judgeNodeType, createTextNode, createEmptyNode, setProps
+  judgeNodeType, createTextNode, createEmptyNode,
+  setProps, judgePlatform
 } from './utils';
 import '../less/dialog.less';
+const platform = judgePlatform();
+console.log('>>> platform', platform);
 
 class Dialog {
   constructor() {
@@ -43,7 +46,7 @@ class Dialog {
     cancelText = type(cancelText) === 'string' ? cancelText : '取消';
     onCancel = type(onCancel) === 'function' ? onCancel : null;
 
-    this.dialogClass = 'dialog-mobile-confirm';
+    this.dialogClass = 'dialog-' + platform + '-confirm';
     const vnode = {
       tag: 'div',
       props: {
@@ -131,7 +134,7 @@ class Dialog {
     iconType = ['success', 'warning', 'error'].includes(iconType) ? iconType : null;
     callback = type(callback) === 'function' ? callback : null;
 
-    this.dialogClass = 'dialog-mobile-message';
+    this.dialogClass = 'dialog-' + platform + '-message';
     this.close();       // 关闭上一个
     const vnode = {
       tag: 'div',
@@ -184,7 +187,7 @@ class Dialog {
     confirmText = type(confirmText) === 'string' ? confirmText : '确定';
     onConfirm = type(onConfirm) === 'function' ? onConfirm : null;
 
-    this.dialogClass = 'dialog-mobile-alert';
+    this.dialogClass = 'dialog-' + platform + '-alert';
     const vnode = {
       tag: 'div',
       props: {

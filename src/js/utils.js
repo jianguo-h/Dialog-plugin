@@ -63,3 +63,15 @@ export const setProps = (node, props) => {
   }
   return node;
 }
+
+// 检测平台, pc or mobile
+export const judgePlatform = () => {
+  const userAgent = navigator.userAgent.toLowerCase();
+  const agents = ['android', 'iphone', 'windows phone', 'ipad', 'ipod'];
+  for(const agent of agents) {
+    if(userAgent.includes(agent)) {
+      return 'mobile';
+    }
+  }
+  return 'pc';
+}
