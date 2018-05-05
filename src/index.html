@@ -6,7 +6,9 @@
 	<title>dialog</title>
 </head>
 <body>
-	<button id = "test">测试dialog</button>
+	<button id = "test1">测试dialog message</button>
+	<button id = "test2">测试dialog confirm</button>
+	<button id = "test3">测试dialog alert</button>
 	<!-- <div class="dialog-pc-confirm">
 		<div class="dialog-mask"></div>
 		<div class="dialog-box gradientShow">
@@ -26,20 +28,24 @@
 </body>
 <script>
 	const dialog = new Dialog();
-	document.querySelector("#test").addEventListener("click", () => {
+	document.querySelector("#test1").addEventListener("click", () => {
+		dialog.message({
+			type: 'success',
+			content: 'falil',
+			callback: function() {
+				dialog.close();
+			}
+		});
+	});
+	document.querySelector("#test2").addEventListener("click", () => {
 		dialog.confirm({
 			title: 'ceshi',
 			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
 		});
-		return;
-		/*dialog.alert({
+	});
+	document.querySelector("#test3").addEventListener("click", () => {
+		dialog.alert({
 			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
-		});
-		return;*/
-		dialog.message({
-			type: 'success',
-			content: 'falil',
-			callback: function() {}
 		});
 	});
 </script>
