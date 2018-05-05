@@ -15,13 +15,13 @@ const webpackProdConfig = webpackMerge(webpackBaseConfig, {
   module: {
     rules: [
       {
-        test: /\.(sass|scss)$/,
+        test: /\.less$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
             'css-loader',
             'postcss-loader',
-            'sass-loader'
+            'less-loader'
           ]
         })
       }

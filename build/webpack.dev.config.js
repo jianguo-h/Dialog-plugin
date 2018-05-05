@@ -11,8 +11,8 @@ const webpackDevConfig = webpackMerge(webpackBaseConfig, {
   module: {
     rules: [
       {
-        test: /\.(sass|scss)$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+        test: /\.less$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']
       }
     ]
   },
