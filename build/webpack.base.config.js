@@ -16,7 +16,7 @@ module.exports = {
         test: /\.js$/,
         exclude: [
           path.resolve(__dirname, '../dist'),
-          path.resolve(__dirname, '../node_modules'),
+          path.resolve(__dirname, '../node_modules')
         ],
         use: ['eslint-loader']
       },
@@ -26,13 +26,12 @@ module.exports = {
         use: 'babel-loader'
       },
       {
-        test: /\.(png|jpg|gif)$/,
+        test: /\.(png|jpg|jpeg|gif|svg)$/,
         use: [
           {
             loader: 'url-loader',
             options: {
-              limit: 10240
-              // name: 'images/[name].[ext]'
+              limit: 1024 * 10
             }
           }
         ]
