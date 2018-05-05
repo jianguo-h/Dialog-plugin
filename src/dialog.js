@@ -18,7 +18,7 @@ import {
   type, TEXT_NODE, EMPTY_NODE, /*  ELEMENT_NODE, */
   judgeNodeType, createTextNode, createEmptyNode, setProps
 } from './utils';
-import './dialog.scss';
+import './dialog.less';
 
 class Dialog {
   constructor() {

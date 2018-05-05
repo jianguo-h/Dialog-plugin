@@ -4,7 +4,7 @@ html, body, div, span, p, button, img {
 	outline: none;
 }
 
-@mixin dialog-wrap {
+.dialog-wrap() {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -99,7 +99,7 @@ html, body, div, span, p, button, img {
 
 // 信息框样式
 .dialog-alert-wrap {
-	@include dialog-wrap;
+	&:extend(.dialog-wrap);
 	.dialog-box {
 		width: 80%;
 		background-color: #fff;
@@ -112,7 +112,7 @@ html, body, div, span, p, button, img {
 
 // 确认模态框
 .dialog-confirm-wrap {
-	@extend .dialog-alert-wrap;
+	&:extend(.dialog-wrap);
 }
 
 .dialog-box-no-flex {
@@ -134,7 +134,8 @@ html, body, div, span, p, button, img {
 		position: absolute;
 		top: 50%;
 		left: 50%;
-		@extend .dialog-mask-no-flex;
+		&:extend(.dialog-mask-no-flex);
+		// @extend .dialog-mask-no-flex;
 	}	
 }
 .dialog-box-pc {
