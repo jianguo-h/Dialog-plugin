@@ -5,8 +5,6 @@
 .dialog-mobile-message {
   border-radius: 4px;
   z-index: 10000;
-  overflow: hidden;
-  max-width: 300px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -19,7 +17,6 @@
     display: flex;
     align-items: center;
     padding: 10px;
-    font-size: 14px;
     .icon-success, .icon-warning, .icon-error {
       width: 16px;
       height: 16px;
@@ -39,7 +36,6 @@
     }
     .dialog-message {
       max-width: 200px;
-      font-size: 14px;
       word-wrap: break-word;
       line-height: 2;
       text-align: center;
@@ -52,8 +48,10 @@
 	.dialog;
 	.dialog-box {
 		width: 80%;
+    max-width: 300px;
 		background-color: #fff;
 		.dialog-content { 
+      .dialog-message { max-width: 200px; }
 			padding: 50px 20px;
 			justify-content: center;
 		}

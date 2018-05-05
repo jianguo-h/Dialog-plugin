@@ -7,11 +7,12 @@
 </head>
 <body>
 	<button id = "test">测试dialog</button>
-	<!-- <div class="dialog-confirm-wrap">
+	<div class="dialog-pc-confirm">
 		<div class="dialog-mask"></div>
 		<div class="dialog-box gradientShow">
 			<div class="dialog-header">
-
+				<p class = 'dialog-title'>这是标题</p>
+				<span class = 'dialog-header-close'></span>
 			</div>
 			<div class="dialog-content">
 				<p class="dialog-message">在这里填写您的信息</p>
@@ -21,15 +22,19 @@
 				<span class="dialog-confirm-btn">确定</span>
 			</div>
 		</div>
-	</div> -->
+	</div>
 </body>
 <script>
 	const dialog = new Dialog();
 	document.querySelector("#test").addEventListener("click", () => {
-		// dialog.confirm();
+		dialog.confirm({
+			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
+		});
+		return;
 		/*dialog.alert({
 			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
-		});*/
+		});
+		return;*/
 		dialog.message({
 			type: 'success',
 			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',

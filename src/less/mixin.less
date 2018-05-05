@@ -1,7 +1,9 @@
 @common-font-color: #333;
 @confirm-btn-font-color: #25a1e9;
+@font-size: 14px;
 
 .dialog {
+  font-size: @font-size;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,7 +24,6 @@
     border-radius: 4px;
     z-index: 10000;
     overflow: hidden;
-    max-width: 300px;
     &.gradientShow {
       animation: gradientShow .3s ease forwards;
     }
@@ -32,8 +33,6 @@
     .dialog-content {
       display: flex;
       .dialog-message {
-        max-width: 200px;
-        font-size: 14px;
         word-wrap: break-word;
         line-height: 2;
         text-align: center;
