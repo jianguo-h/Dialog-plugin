@@ -1,9 +1,9 @@
 const path = require('path');
-const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
-const copyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpackBaseConfig = require('./webpack.base.config');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const webpackProdConfig = webpackMerge(webpackBaseConfig, {
@@ -16,20 +16,13 @@ const webpackProdConfig = webpackMerge(webpackBaseConfig, {
     rules: [
       {
         test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader',
-            'postcss-loader',
-            'less-loader'
-          ]
-        })
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader']
       }
     ]
   },
   plugins: [
     // 提取css
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: 'css/dialog.min.css'
     }),
     // 压缩css
@@ -43,8 +36,19 @@ const webpackProdConfig = webpackMerge(webpackBaseConfig, {
       },
       canPrint: true
     }),
+    // 压缩混淆js
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        warnings: false,
+        compress: {
+          drop_console: true,   // 去除日志
+          drop_debugger: true   // 去除debugger
+        }
+      },
+      parallel: true
+    }),
     // 拷贝静态文件
-    new copyWebpackPlugin([{
+    new CopyWebpackPlugin([{
       from: path.resolve(__dirname, '../static'),
       to: path.resolve(__dirname, '../dist/static'),
       ignore: ['.*']
