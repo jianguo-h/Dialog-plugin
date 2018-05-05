@@ -5,6 +5,7 @@
 .dialog-pc-message {
   border-radius: 4px;
   z-index: 10000;
+  min-width: 100px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -16,6 +17,7 @@
   .dialog-content {
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 10px;
     .icon-success, .icon-warning, .icon-error {
       width: 16px;
@@ -24,20 +26,15 @@
       display: inline-block;
       background-position: center;
       background-repeat: no-repeat;
+      & + .dialog-message { text-align: left; }
     }
-    .icon-success {
-      background-image: url(/static/images/icon-success.png);
-    }
-    .icon-warning {
-      background-image: url(/static/images/icon-warning.png);
-    }
-    .icon-error {
-      background-image: url(/static/images/icon-error.png);
-    }
+    .icon-success { background-image: url(/static/images/icon-success.png); }
+    .icon-warning { background-image: url(/static/images/icon-warning.png); }
+    .icon-error { background-image: url(/static/images/icon-error.png); }
     .dialog-message {
       max-width: 260px;
       word-wrap: break-word;
-      line-height: 2;
+      line-height: @line-height;
       text-align: center;
     }
   }
@@ -55,6 +52,7 @@
       align-items: center;
       padding: 10px 20px;
       border-bottom: 1px solid #eee;
+      background-color: #f8f8f8;
       .dialog-title {
         flex: 1;
         margin-right: 20px;
@@ -72,8 +70,28 @@
     }
     .dialog-content {
       .dialog-message { max-width: 280px; }
-      padding: 50px 20px;
+      padding: 30px 20px;
       justify-content: center;
+    }
+    .dialog-footer {
+      justify-content: flex-end;
+      padding: 0 20px 10px;
+      .dialog-cancel-btn, .dialog-confirm-btn {
+        height: 30px;
+        line-height: 30px;
+        border-radius: 2px;
+        padding: 0 15px;
+        border: 1px solid #dedede;
+      }
+      /* .dialog-cancel-btn { 
+        border-right: 1px solid #eee;
+      } */
+      .dialog-confirm-btn {
+        color: #fff;
+        margin-left: 10px;
+        border-color: @confirm-btn-font-color;
+        background-color: @confirm-btn-font-color;
+      }
     }
   }
 }

@@ -1,6 +1,7 @@
 @common-font-color: #333;
 @confirm-btn-font-color: #25a1e9;
 @font-size: 14px;
+@line-height: 1.5;
 
 .dialog {
   font-size: @font-size;
@@ -18,7 +19,7 @@
   }
   .dialog-mask {
     z-index: 9999;
-    background-color: rgba(55, 55, 55, .6);
+    background-color: rgba(0, 0, 0, .3);
   }
   .dialog-box {
     border-radius: 4px;
@@ -34,23 +35,17 @@
       display: flex;
       .dialog-message {
         word-wrap: break-word;
-        line-height: 2;
+        line-height: @line-height;
         text-align: center;
       }
     }
     .dialog-footer {
       display: flex;
-      border-top: 1px solid #eee;
       .dialog-cancel-btn, .dialog-confirm-btn {
-        flex: 1;
         display: inline-block;
         cursor: pointer;
-        height: 40px;
-        line-height: 40px;
         text-align: center;
       }
-      .dialog-cancel-btn { border-right: 1px solid #eee; }
-      .dialog-confirm-btn { color: #25a1e9; }
     }
   }
 }
