@@ -27,8 +27,14 @@
 	const dialog = new Dialog();
 	document.querySelector("#test").addEventListener("click", () => {
 		// dialog.confirm();
-		// dialog.alert();
-		dialog.message();
+		/*dialog.alert({
+			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
+		});*/
+		dialog.message({
+			type: 'success',
+			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
+			callback: function() {}
+		});
 	});
 </script>
 </html>

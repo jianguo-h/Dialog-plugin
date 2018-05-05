@@ -18,7 +18,7 @@ import {
   type, TEXT_NODE, EMPTY_NODE, /*  ELEMENT_NODE, */
   judgeNodeType, createTextNode, createEmptyNode, setProps
 } from './utils';
-import './dialog.less';
+import '../less/dialog.less';
 
 class Dialog {
   constructor() {
@@ -43,7 +43,7 @@ class Dialog {
     cancelText = type(cancelText) === 'string' ? cancelText : '取消';
     onCancel = type(onCancel) === 'function' ? onCancel : null;
 
-    this.dialogClass = 'dialog-confirm-wrap';
+    this.dialogClass = 'dialog-mobile-confirm';
     const vnode = {
       tag: 'div',
       props: {
@@ -131,7 +131,7 @@ class Dialog {
     iconType = ['success', 'warning', 'error'].includes(iconType) ? iconType : null;
     callback = type(callback) === 'function' ? callback : null;
 
-    this.dialogClass = 'dialog-message-wrap';
+    this.dialogClass = 'dialog-mobile-message';
     this.close();       // 关闭上一个
     const vnode = {
       tag: 'div',
@@ -184,7 +184,7 @@ class Dialog {
     confirmText = type(confirmText) === 'string' ? confirmText : '确定';
     onConfirm = type(onConfirm) === 'function' ? onConfirm : null;
 
-    this.dialogClass = 'dialog-alert-wrap';
+    this.dialogClass = 'dialog-mobile-alert';
     const vnode = {
       tag: 'div',
       props: {

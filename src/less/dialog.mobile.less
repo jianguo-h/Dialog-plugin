@@ -1,0 +1,109 @@
+/* 移动端样式 */
+@import (reference) './mixin.less';
+
+// 提示信息样式
+.dialog-mobile-message {
+  border-radius: 4px;
+  z-index: 10000;
+  overflow: hidden;
+  max-width: 300px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  color: #fff;
+  background-color: rgba(0, 0, 0, .65);
+  &.gradientShow {
+    animation: gradientShow .3s ease forwards;
+  }
+  .dialog-content {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-size: 14px;
+    .icon-success, .icon-warning, .icon-error {
+      width: 16px;
+      height: 16px;
+      margin-right: 10px;
+      display: inline-block;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .icon-success {
+      background-image: url(/static/images/icon-success.png);
+    }
+    .icon-warning {
+      background-image: url(/static/images/icon-warning.png);
+    }
+    .icon-error {
+      background-image: url(/static/images/icon-error.png);
+    }
+    .dialog-message {
+      max-width: 200px;
+      font-size: 14px;
+      word-wrap: break-word;
+      line-height: 2;
+      text-align: center;
+    }
+  }
+}
+
+// 信息框样式, 确认模态框
+.dialog-mobile-alert, .dialog-mobile-confirm {
+	.dialog;
+	.dialog-box {
+		width: 80%;
+		background-color: #fff;
+		.dialog-content { 
+			padding: 50px 20px;
+			justify-content: center;
+		}
+	}
+}
+
+/* .dialog-box-no-flex {
+	.dialog-footer {
+		.dialog-cancel-btn, .dialog-confirm-btn {
+			display: inline-block;
+		}
+		.dialog-cancel-btn { float: left; }
+		.dialog-confirm-btn { float: right; }
+	}
+	.dialog-footer-1 {
+		.dialog-cancel-btn {
+			float: initial;
+		}
+	}
+}
+.dialog-mask-no-flex {
+	.dialog-box {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		&:extend(.dialog-mask-no-flex);
+	}	
+}
+.dialog-box-pc {
+	width: 300px;
+	padding: 20px 0;
+}
+.dialog-box-no-mask {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+} */
+@keyframes gradientShow {
+	from {
+		transform: scale(0);
+	}
+	to {
+		transform: scale(100%);
+	}
+}
+/* @keyframes gradientHide {
+	from {
+		transform: scale(100%);
+	}
+	to {
+		transform: scale(0);
+	}
+} */
