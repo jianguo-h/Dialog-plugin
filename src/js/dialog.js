@@ -21,7 +21,8 @@ import {
 } from './utils';
 import '../less/dialog.less';
 const platform = judgePlatform();
-console.log('>>> platform', platform);
+const isPc = platform !== 'mobile';
+console.log('>>> platform', platform, isPc);
 
 class Dialog {
   constructor() {
@@ -36,15 +37,23 @@ class Dialog {
       onConfirm: null,                     // 点击确定的回调, default: null, 配置了该参数需手动关闭
       cancelText: '取消',                  // 取消按钮的文字, default: '取消'
       onCancel: null,                      // 点击取消的回调, default: null, 配置了该参数需手动关闭
+      ...(isPc ? {
+        title: '这里是标题',
+        showIconClose: true
+      } : {}),
       ...opts
     }
-    let { confirmText, content, onConfirm, maskClose, cancelText, onCancel } = params;
+    let { confirmText, content, onConfirm, maskClose, cancelText, onCancel, title, showIconClose } = params;
     maskClose = type(maskClose) === 'boolean' ? maskClose : true;
     content = type(content) === 'string' ? content : '这里放提示的内容';
     confirmText = type(confirmText) === 'string' ? confirmText : '确定';
     onConfirm = type(onConfirm) === 'function' ? onConfirm : null;
     cancelText = type(cancelText) === 'string' ? cancelText : '取消';
     onCancel = type(onCancel) === 'function' ? onCancel : null;
+    if(isPc) {
+      title = type(title) === 'string' ? title : '这里是标题';
+      showIconClose = type(showIconClose) === 'boolean' ? showIconClose : true;
+    }
 
     this.dialogClass = 'dialog-' + platform + '-confirm';
     const vnode = {
@@ -69,6 +78,22 @@ class Dialog {
         },
         { tag: 'div', props: { className: 'dialog-box gradientShow' },
           children: [
+            isPc ? {
+              tag: 'div',
+              props: { className: 'dialog-header' },
+              children: [
+                {
+                  tag: 'p',
+                  props: { className: 'dialog-title' },
+                  children: title
+                },
+                showIconClose ? {
+                  tag: 'span',
+                  props: { className: 'dialog-header-close' },
+                  children: null
+                } : null
+              ]
+            } : null,
             { tag: 'div', props: { className: 'dialog-content' },
               children: [
                 { tag: 'p', props: { className: 'dialog-message' }, children: content }
