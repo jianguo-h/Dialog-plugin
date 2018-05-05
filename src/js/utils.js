@@ -75,3 +75,15 @@ export const judgePlatform = () => {
   }
   return 'pc';
 }
+
+// 设置元素横向垂直居中
+export const setNodeCenter = node => {
+  const { offsetWidth, offsetHeight } = node;
+  const props = {
+    style: {
+      marginLeft: -1 * Math.round(offsetWidth / 2) + 'px',
+      marginTop: -1 * Math.round(offsetHeight / 2) + 'px'
+    }
+  }
+  setProps(node, props);
+}
