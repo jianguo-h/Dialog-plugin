@@ -6,6 +6,47 @@
 	<title>dialog</title>
 <link href="./css/dialog.min.css" rel="stylesheet"></head>
 <body>
-	<button id = "test">测试dialog</button>
+	<button id = "test1">测试dialog message</button>
+	<button id = "test2">测试dialog confirm</button>
+	<button id = "test3">测试dialog alert</button>
+	<!-- <div class="dialog-pc-confirm">
+		<div class="dialog-mask"></div>
+		<div class="dialog-box gradientShow">
+			<div class="dialog-header">
+				<p class = 'dialog-title'>这是标题</p>
+				<span class = 'dialog-header-close'></span>
+			</div>
+			<div class="dialog-content">
+				<p class="dialog-message">在这里填写您的信息</p>
+			</div>
+			<div class="dialog-footer">
+				<span class="dialog-cancel-btn">取消</span>
+				<span class="dialog-confirm-btn">确定</span>
+			</div>
+		</div>
+	</div> -->
 <script type="text/javascript" src="./js/dialog.min.js"></script></body>
+<script>
+	const dialog = new Dialog();
+	document.querySelector("#test1").addEventListener("click", () => {
+		dialog.message({
+			type: 'success',
+			content: 'falil',
+			callback: function() {
+				dialog.close();
+			}
+		});
+	});
+	document.querySelector("#test2").addEventListener("click", () => {
+		dialog.confirm({
+			title: 'ceshi',
+			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
+		});
+	});
+	document.querySelector("#test3").addEventListener("click", () => {
+		dialog.alert({
+			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
+		});
+	});
+</script>
 </html>
