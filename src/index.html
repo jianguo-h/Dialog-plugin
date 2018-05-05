@@ -7,7 +7,7 @@
 </head>
 <body>
 	<button id = "test">测试dialog</button>
-	<div class="dialog-pc-confirm">
+	<!-- <div class="dialog-pc-confirm">
 		<div class="dialog-mask"></div>
 		<div class="dialog-box gradientShow">
 			<div class="dialog-header">
@@ -22,12 +22,14 @@
 				<span class="dialog-confirm-btn">确定</span>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </body>
 <script>
 	const dialog = new Dialog();
 	document.querySelector("#test").addEventListener("click", () => {
 		dialog.confirm({
+			title: 'ceshi',
+			showIconClose: false,
 			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
 		});
 		return;
