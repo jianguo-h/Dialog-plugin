@@ -89,7 +89,14 @@ class Dialog {
                 },
                 showIconClose ? {
                   tag: 'span',
-                  props: { className: 'dialog-header-close' },
+                  props: {
+                    className: 'dialog-header-close',
+                    on: {
+                      click: () => {
+                        this.close();
+                      }
+                    }
+                  },
                   children: null
                 } : null
               ]
@@ -155,7 +162,7 @@ class Dialog {
     }
     let { duration, content, callback, type: iconType } = params;
     duration = (type(duration) === 'number' && !Number.isNaN(duration) && duration > 0) ? duration : 3000;
-    content = type(content) === 'string' ? content : '这里放提示的内容';
+    content = type(content) === 'string' && content.trim() !== '' ? content : '这里放提示的内容';
     iconType = ['success', 'warning', 'error'].includes(iconType) ? iconType : null;
     callback = type(callback) === 'function' ? callback : null;
 
@@ -204,13 +211,21 @@ class Dialog {
       content: '这里放提示的内容',          // 提示的内容, default: '这里放提示的内容'
       confirmText: '确定',                 // 确定按钮的文字, default: '确定'
       onConfirm: null,                     // 点击确定的回调, default: null, 配置了该参数需手动关闭
+      ...(isPc ? {
+        title: '这里是标题',
+        showIconClose: true
+      } : {}),
       ...opts
     }
-    let { confirmText, content, onConfirm, maskClose } = params;
+    let { confirmText, content, onConfirm, maskClose, title, showIconClose } = params;
     maskClose = type(maskClose) === 'boolean' ? maskClose : true;
     content = type(content) === 'string' ? content : '这里放提示的内容';
     confirmText = type(confirmText) === 'string' ? confirmText : '确定';
     onConfirm = type(onConfirm) === 'function' ? onConfirm : null;
+    if(isPc) {
+      title = type(title) === 'string' ? title : '这里是标题';
+      showIconClose = type(showIconClose) === 'boolean' ? showIconClose : true;
+    }
 
     this.dialogClass = 'dialog-' + platform + '-alert';
     const vnode = {
@@ -235,6 +250,29 @@ class Dialog {
         },
         { tag: 'div', props: { className: 'dialog-box gradientShow' },
           children: [
+            isPc ? {
+              tag: 'div',
+              props: { className: 'dialog-header' },
+              children: [
+                {
+                  tag: 'p',
+                  props: { className: 'dialog-title' },
+                  children: title
+                },
+                showIconClose ? {
+                  tag: 'span',
+                  props: {
+                    className: 'dialog-header-close',
+                    on: {
+                      click: () => {
+                        this.close();
+                      }
+                    }
+                  },
+                  children: null
+                } : null
+              ]
+            } : null,
             { tag: 'div', props: { className: 'dialog-content' },
               children: [
                 { tag: 'p', props: { className: 'dialog-message' }, children: content }
