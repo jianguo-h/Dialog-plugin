@@ -28,24 +28,42 @@
 <script type="text/javascript" src="./js/dialog.min.js"></script></body>
 <script>
 	const dialog = new Dialog();
-	document.querySelector("#test1").addEventListener("click", () => {
+	document.querySelector("#test1").addEventListener("click", function() {
 		dialog.message({
 			type: 'success',
 			content: 'falil',
 			callback: function() {
 				dialog.close();
+				dialog.confirm()
 			}
 		});
 	});
-	document.querySelector("#test2").addEventListener("click", () => {
+	document.querySelector("#test2").addEventListener("click", function() {
 		dialog.confirm({
-			title: 'ceshi',
+			title: 'ceshi1',
 			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
+			onConfirm: function() {
+				dialog.alert({
+					content: 'ceshi2',
+					onConfirm: function() {
+						dialog.confirm({
+							content: 'ceshi3',
+							onConfirm: function() {
+								dialog.close();
+							}
+						});
+					}
+				});
+			}
 		});
 	});
-	document.querySelector("#test3").addEventListener("click", () => {
+	document.querySelector("#test3").addEventListener("click", function() {
 		dialog.alert({
 			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
+			onConfirm: function() {
+				dialog.message()
+				// dialog.close();
+			}
 		});
 	});
 </script>
