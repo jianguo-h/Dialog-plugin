@@ -1,32 +1,19 @@
-/*
-<div class="dialog-wrap">
-  <div class="dialog-mask"></div>
-  <div class="dialog-box dialog-box-pc gradientShow">
-    <div class="dialog-header"></div>
-    <div class="dialog-content">
-      <img src="./static/images/right.png" class="dialog-img">
-      <p class="dialog-message">在这里填写您的信息</p>
-    </div>
-    <div class="dialog-footer">
-      <span class="dialog-cancel-btn">取消</span>
-      <span class="dialog-confirm-btn">确定</span>
-    </div>
-  </div>
-</div>
-*/
 import {
-  type, TEXT_NODE, EMPTY_NODE, /*  ELEMENT_NODE, */
+  type, TEXT_NODE, EMPTY_NODE,
   judgeNodeType, createTextNode, createEmptyNode,
-  /*setProps, */judgePlatform, setNodeCenter
+  judgePlatform, setNodeCenter
 } from './utils';
 import '../less/dialog.less';
 const platform = judgePlatform();
 const isPc = platform !== 'mobile';
-console.log('>>> platform', platform, isPc);
 
 class Dialog {
   constructor() {
-    this.dialogEl = null;              // 挂载的元素节点
+    if(!(this instanceof Dialog)) {
+      return new Dialog();
+    }
+    this.dialogEl = null;              // 当前显示的已挂载的元素节点
+    this.mountedEls = [];              // 所有已经挂载的元素
     this.timer = null;
   }
   // 提示
@@ -44,7 +31,7 @@ class Dialog {
     iconType = ['success', 'warning', 'error'].includes(iconType) ? iconType : null;
     callback = type(callback) === 'function' ? callback : null;
 
-    this.close();       // 关闭上一个
+    this.timer && this.close();       // 关闭上一个
     const vnode = {
       tag: 'div',
       props: {
@@ -63,6 +50,7 @@ class Dialog {
     const el = this.createElement(vnode);
     this.dialogEl = el;
     this.mounted(el);
+    this.mountedEls.push(el);
 
     setNodeCenter(el);
     this.timer = setTimeout(() => {
@@ -207,14 +195,18 @@ class Dialog {
       ]
     };
     const el = this.createElement(vnode);
-    this.dialogEl = el;
     this.mounted(el);
+    this.mountedEls.push(el);
+    this.dialogEl = el;
   }
   // 关闭
   close() {
+    let len = this.mountedEls.length - 1;
     if(this.dialogEl) {
       this.dialogEl.parentNode.removeChild(this.dialogEl);
-      this.dialogEl = null;
+      this.mountedEls.splice(len, 1);
+      len = this.mountedEls.length - 1;
+      this.dialogEl = this.mountedEls[len];
     }
     if(this.timer) {
       clearTimeout(this.timer);

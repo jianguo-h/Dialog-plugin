@@ -34,18 +34,36 @@
 			content: 'falil',
 			callback: function() {
 				dialog.close();
+				dialog.confirm()
 			}
 		});
 	});
 	document.querySelector("#test2").addEventListener("click", () => {
 		dialog.confirm({
-			title: 'ceshi',
+			title: 'ceshi1',
 			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
+			onConfirm: () => {
+				dialog.alert({
+					content: 'ceshi2',
+					onConfirm: () => {
+						dialog.confirm({
+							content: 'ceshi3',
+							onConfirm: () => {
+								dialog.close();
+							}
+						});
+					}
+				});
+			}
 		});
 	});
 	document.querySelector("#test3").addEventListener("click", () => {
 		dialog.alert({
 			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
+			onConfirm: () => {
+				dialog.message()
+				// dialog.close();
+			}
 		});
 	});
 </script>
