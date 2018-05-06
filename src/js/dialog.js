@@ -1,11 +1,9 @@
 import {
   type, TEXT_NODE, EMPTY_NODE,
   judgeNodeType, createTextNode, createEmptyNode,
-  judgePlatform, setNodeCenter
+  setNodeCenter, platform, isPc
 } from './utils';
 import '../less/dialog.less';
-const platform = judgePlatform();
-const isPc = platform !== 'mobile';
 
 class Dialog {
   constructor() {

@@ -28,7 +28,7 @@
 </body>
 <script>
 	const dialog = new Dialog();
-	document.querySelector("#test1").addEventListener("click", () => {
+	document.querySelector("#test1").addEventListener("click", function() {
 		dialog.message({
 			type: 'success',
 			content: 'falil',
@@ -38,17 +38,17 @@
 			}
 		});
 	});
-	document.querySelector("#test2").addEventListener("click", () => {
+	document.querySelector("#test2").addEventListener("click", function() {
 		dialog.confirm({
 			title: 'ceshi1',
 			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
-			onConfirm: () => {
+			onConfirm: function() {
 				dialog.alert({
 					content: 'ceshi2',
-					onConfirm: () => {
+					onConfirm: function() {
 						dialog.confirm({
 							content: 'ceshi3',
-							onConfirm: () => {
+							onConfirm: function() {
 								dialog.close();
 							}
 						});
@@ -57,10 +57,10 @@
 			}
 		});
 	});
-	document.querySelector("#test3").addEventListener("click", () => {
+	document.querySelector("#test3").addEventListener("click", function() {
 		dialog.alert({
 			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
-			onConfirm: () => {
+			onConfirm: function() {
 				dialog.message()
 				// dialog.close();
 			}

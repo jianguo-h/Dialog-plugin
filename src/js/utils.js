@@ -75,6 +75,8 @@ export const judgePlatform = () => {
   }
   return 'pc';
 }
+export const platform = judgePlatform();
+export const isPc = platform !== 'mobile';
 
 // 设置元素横向垂直居中
 export const setNodeCenter = node => {
