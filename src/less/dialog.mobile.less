@@ -1,63 +1,31 @@
 /* 移动端样式 */
-@import (reference) './mixin.less';
+@import (reference) './variable.less';
 
 // 提示信息样式
 .dialog-mobile-message {
-  border-radius: 4px;
-  z-index: 10000;
-  min-width: 100px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  color: #fff;
-  background-color: rgba(0, 0, 0, .65);
-  &.gradientShow {
-    animation: gradientShow .3s ease forwards;
-  }
   .dialog-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    .icon-success, .icon-warning, .icon-error {
-      width: 16px;
-      height: 16px;
-      margin-right: 10px;
-      display: inline-block;
-      background-position: center;
-      background-repeat: no-repeat;
-      & + .dialog-message { text-align: left; }
-    }
-    .icon-success { background-image: url(../../static/images/icon-success.png); }
-    .icon-warning { background-image: url(../../static/images/icon-warning.png); }
-    .icon-error { background-image: url(../../static/images/icon-error.png); }
     .dialog-message {
-      max-width: 200px;
-      word-wrap: break-word;
-      line-height: @line-height;
-      text-align: center;
+      max-width: @dialog-mobile-message-max-width;
     }
   }
 }
 
 // 信息框样式, 确认模态框
-.dialog-mobile-alert, .dialog-mobile-confirm {
-	.dialog;
+.dialog-mobile-alert,
+.dialog-mobile-confirm {
 	.dialog-box {
-		width: 80%;
-    max-width: 300px;
-		background-color: #fff;
+		width: @dialog-mobile-box-width;
+    max-width: @dialog-mobile-box-max-width;
 		.dialog-content { 
-      .dialog-message { max-width: 200px; }
-			padding: 50px 20px;
-			justify-content: center;
+      .dialog-message { max-width: @dialog-mobile-box-message-max-width; }
+			padding: @dialog-mobile-box-content-vertical-padding @padding;
 		}
     .dialog-footer {
       border-top: 1px solid #eee;
       .dialog-cancel-btn, .dialog-confirm-btn {
         flex: 1;
-        height: 40px;
-        line-height: 40px;
+        height: @mobile-btn-height;
+        line-height: @mobile-btn-height;
       }
       .dialog-cancel-btn { border-right: 1px solid #eee; }
       .dialog-confirm-btn { color: @confirm-btn-font-color; }
@@ -89,26 +57,10 @@
 }
 .dialog-box-pc {
 	width: 300px;
-	padding: 20px 0;
+	padding: @padding 0;
 }
 .dialog-box-no-mask {
 	position: fixed;
 	left: 50%;
 	top: 50%;
-} */
-@keyframes gradientShow {
-	from {
-		transform: scale(0);
-	}
-	to {
-		transform: scale(100%);
-	}
-}
-/* @keyframes gradientHide {
-	from {
-		transform: scale(100%);
-	}
-	to {
-		transform: scale(0);
-	}
 } */

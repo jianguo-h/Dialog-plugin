@@ -1,0 +1,118 @@
+@import (reference) './variable.less';
+
+/* common less */
+html, body, div, span, p, button, img {
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+
+// 提示信息相同样式
+.dialog-mobile-message,
+.dialog-pc-message {
+  border-radius: 4px;
+  z-index: 10000;
+  min-width: 100px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  color: #fff;
+  background-color: rgba(0, 0, 0, .65);
+  &.gradientShow {
+    animation: gradientShow .3s ease forwards;
+  }
+  .dialog-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    .icon-success, .icon-warning, .icon-error {
+      width: 16px;
+      height: 16px;
+      margin-right: 10px;
+      display: inline-block;
+      background-position: center;
+      background-repeat: no-repeat;
+      & + .dialog-message { text-align: left; }
+    }
+    .icon-success { background-image: url(../../static/images/icon-success.png); }
+    .icon-warning { background-image: url(../../static/images/icon-warning.png); }
+    .icon-error { background-image: url(../../static/images/icon-error.png); }
+    .dialog-message {
+      word-wrap: break-word;
+      line-height: @line-height;
+      text-align: center;
+    }
+  }
+}
+
+// 信息框样式, 确认模态框相同样式
+.dialog-pc-alert,
+.dialog-pc-confirm,
+.dialog-mobile-alert,
+.dialog-mobile-confirm {
+  // .dialog;
+  font-size: @font-size;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: @common-font-color;
+  &, .dialog-mask {
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    position: fixed;
+  }
+  .dialog-mask {
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, .3);
+  }
+  .dialog-box {
+    background-color: #fff;
+    border-radius: 4px;
+    z-index: 10000;
+    overflow: hidden;
+    &.gradientShow {
+      animation: gradientShow .3s ease forwards;
+    }
+    /* &.gradientHide {
+      animation: gradientHide .3s ease forwards;
+    } */
+    .dialog-content {
+      display: flex;
+      justify-content: center;
+      .dialog-message {
+        word-wrap: break-word;
+        line-height: @line-height;
+        text-align: center;
+      }
+    }
+    .dialog-footer {
+      display: flex;
+      .dialog-cancel-btn, .dialog-confirm-btn {
+        display: inline-block;
+        cursor: pointer;
+        text-align: center;
+      }
+    }
+  }
+}
+
+@keyframes gradientShow {
+	from {
+		transform: scale(0);
+	}
+	to {
+		transform: scale(100%);
+	}
+}
+/* @keyframes gradientHide {
+	from {
+		transform: scale(100%);
+	}
+	to {
+		transform: scale(0);
+	}
+} */
