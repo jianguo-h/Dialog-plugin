@@ -26,7 +26,8 @@ console.log('>>> platform', platform, isPc);
 
 class Dialog {
   constructor() {
-    this.dialogClass = '';              // 挂载元素的class
+    this.dialogEl = null;              // 挂载的元素节点
+    this.timer = null;
   }
   // 提示
   message(opts) {
@@ -43,12 +44,11 @@ class Dialog {
     iconType = ['success', 'warning', 'error'].includes(iconType) ? iconType : null;
     callback = type(callback) === 'function' ? callback : null;
 
-    this.dialogClass = 'dialog-' + platform + '-message';
     this.close();       // 关闭上一个
     const vnode = {
       tag: 'div',
       props: {
-        className: this.dialogClass + ' gradientShow'
+        className: 'dialog-' + platform + '-message gradientShow'
       },
       children: [
         {
@@ -61,10 +61,11 @@ class Dialog {
       ]
     };
     const el = this.createElement(vnode);
+    this.dialogEl = el;
     this.mounted(el);
 
     setNodeCenter(el);
-    setTimeout(() => {
+    this.timer = setTimeout(() => {
       if(!callback) {
         this.close();
       }
@@ -113,11 +114,10 @@ class Dialog {
       onCancel = type(onCancel) === 'function' ? onCancel : null;
     }
 
-    this.dialogClass = 'dialog-' + platform + '-' + modalType;
     const vnode = {
       tag: 'div',
       props: {
-        className: this.dialogClass
+        className: 'dialog-' + platform + '-' + modalType
       },
       children: [
         {
@@ -207,13 +207,18 @@ class Dialog {
       ]
     };
     const el = this.createElement(vnode);
+    this.dialogEl = el;
     this.mounted(el);
   }
   // 关闭
   close() {
-    const dialogEl = document.querySelector('.' + this.dialogClass);
-    if(dialogEl) {
-      dialogEl.parentNode.removeChild(dialogEl);
+    if(this.dialogEl) {
+      this.dialogEl.parentNode.removeChild(this.dialogEl);
+      this.dialogEl = null;
+    }
+    if(this.timer) {
+      clearTimeout(this.timer);
+      this.timer = null;
     }
   }
   // 生成真实dom
