@@ -1,61 +1,30 @@
 /* pc端样式 */
-@import (reference) './mixin.less';
+@import (reference) './variable.less';
 
 // 提示信息样式
 .dialog-pc-message {
-  border-radius: 4px;
-  z-index: 10000;
-  min-width: 100px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  color: #fff;
-  background-color: rgba(0, 0, 0, .65);
-  &.gradientShow {
-    animation: gradientShow .3s ease forwards;
-  }
   .dialog-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    .icon-success, .icon-warning, .icon-error {
-      width: 16px;
-      height: 16px;
-      margin-right: 10px;
-      display: inline-block;
-      background-position: center;
-      background-repeat: no-repeat;
-      & + .dialog-message { text-align: left; }
-    }
-    .icon-success { background-image: url(../../static/images/icon-success.png); }
-    .icon-warning { background-image: url(../../static/images/icon-warning.png); }
-    .icon-error { background-image: url(../../static/images/icon-error.png); }
     .dialog-message {
-      max-width: 260px;
-      word-wrap: break-word;
-      line-height: @line-height;
-      text-align: center;
+      max-width: @dialog-pc-message-max-width;
     }
   }
 }
 
 // 信息框样式, 确认模态框
-.dialog-pc-alert, .dialog-pc-confirm {
-  .dialog;
+.dialog-pc-alert,
+.dialog-pc-confirm {
   .dialog-box {
-    width: 320px;
-    max-width: 420px;
-    background-color: #fff;
+    width: @dialog-pc-box-width;
+    max-width: @dialog-pc-box-max-width;
     .dialog-header {
       display: flex;
       align-items: center;
-      padding: 10px 20px;
+      padding: 10px @padding;
       border-bottom: 1px solid #eee;
       background-color: #f8f8f8;
       .dialog-title {
         flex: 1;
-        margin-right: 20px;
+        margin-right: @padding;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -69,25 +38,21 @@
       }
     }
     .dialog-content {
-      .dialog-message { max-width: 280px; }
-      padding: 30px 20px;
-      justify-content: center;
+      .dialog-message { max-width: @dialog-pc-box-message-max-width; }
+      padding: @dialog-pc-box-content-vertical-padding @padding;
     }
     .dialog-footer {
       justify-content: flex-end;
-      padding: 0 20px 10px;
+      padding: 0 @padding 10px;
       .dialog-cancel-btn, .dialog-confirm-btn {
-        height: 30px;
-        line-height: 30px;
+        height: @pc-btn-height;
+        line-height: @pc-btn-height;
         border-radius: 2px;
         padding: 0 15px;
         transition: opacity ease .3s;
         border: 1px solid #dedede;
         &:hover { opacity: .9; }
       }
-      /* .dialog-cancel-btn { 
-        border-right: 1px solid #eee;
-      } */
       .dialog-confirm-btn {
         color: #fff;
         margin-left: 10px;
