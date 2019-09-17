@@ -12,18 +12,9 @@ module.exports = {
   module: {
     rules: [
       {
-        enforce: 'pre',
-        test: /\.js$/,
-        exclude: [
-          path.resolve(__dirname, '../dist'),
-          path.resolve(__dirname, '../node_modules')
-        ],
-        use: ['eslint-loader']
-      },
-      {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: 'babel-loader'
+        use: ['babel-loader']
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
