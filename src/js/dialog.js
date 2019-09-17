@@ -22,7 +22,7 @@ class Dialog {
       type: null,                          // 类型, 'success', 'warning' or 'error', default: null
       callback: null,                      // duration后后执行的回调, 默认执行关闭, 若配置了callback需手动关闭
       ...opts
-    }
+    };
     let { duration, content, callback, type: iconType } = params;
     duration = (type(duration) === 'number' && !Number.isNaN(duration) && duration > 0) ? duration : 3000;
     content = type(content) === 'string' && content.trim() !== '' ? content : '这里放提示的内容';
@@ -37,7 +37,8 @@ class Dialog {
       },
       children: [
         {
-          tag: 'div', props: { className: 'dialog-content' },
+          tag: 'div',
+          props: { className: 'dialog-content' },
           children: [
             iconType ? { tag: 'span', props: { className: 'icon-' + iconType }, children: null } : null,
             { tag: 'p', props: { className: 'dialog-message' }, children: content }
@@ -85,7 +86,7 @@ class Dialog {
         onCancel: null                      // 点击取消的回调, default: null, 配置了该参数需手动关闭
       } : {}),
       ...(type(opts) === 'object' ? opts : {})
-    }
+    };
     let { confirmText, content, onConfirm, maskClose, cancelText, onCancel, title, showIconClose } = params;
     maskClose = type(maskClose) === 'boolean' ? maskClose : true;
     content = type(content) === 'string' ? content : '这里放提示的内容';
@@ -120,7 +121,9 @@ class Dialog {
           },
           children: null
         },
-        { tag: 'div', props: { className: 'dialog-box gradientShow' },
+        {
+          tag: 'div',
+          props: { className: 'dialog-box gradientShow' },
           children: [
             isPc ? {
               tag: 'div',
@@ -145,12 +148,16 @@ class Dialog {
                 } : null
               ]
             } : null,
-            { tag: 'div', props: { className: 'dialog-content' },
+            {
+              tag: 'div',
+              props: { className: 'dialog-content' },
               children: [
                 { tag: 'p', props: { className: 'dialog-message' }, children: content }
               ]
             },
-            { tag: 'div', props: { className: 'dialog-footer' },
+            {
+              tag: 'div',
+              props: { className: 'dialog-footer' },
               children: [
                 isConfirm ? {
                   tag: 'span',
@@ -235,7 +242,7 @@ class Dialog {
         for(const child of children) {
           if(child) {
             childNode = this.createElement(child);
-            el.appendChild(childNode)
+            el.appendChild(childNode);
           }
         }
       }
