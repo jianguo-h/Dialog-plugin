@@ -3,21 +3,21 @@ module.exports = {
   root: true,
   parserOptions: {
     parser: 'babel-eslint',
-    sourceType: 'module',
-    ecmaVersion: 2017,
+    sourceType: 'module'
   },
   env: {
     browser: true,
+    es6: true
   },
   'rules': {
-    'semi': 0,                              // 要求或禁止使用分号代替 ASI
+    'semi': 2,                              // 要求或禁止使用分号代替 ASI
     'quotes': 0,                            // 强制使用一致的反勾号、双引号或单引号
     'no-new': 0,                            // 禁止使用 new 以避免产生副作用
     'no-var': 2,                            // 要求使用 let 或 const 而不是 var
     'eol-last': 0,                          // 要求或禁止文件末尾存在空行
     'brace-style': 0,                       // 强制在代码块中使用一致的大括号风格
     'prefer-const': 2,                      // 要求使用 const 声明那些声明后不再被修改的变量
-    'comma-dangle': 2,                      // 禁止结尾有多余的逗号
+    'comma-dangle': [2, {imports: 'only-multiline'}],                      // 禁止结尾有多余的逗号
     'no-unused-vars': 1,                    // 禁止出现未使用过的变量
     'spaced-comment': 0,                    // 要求或禁止在注释前有空白
     'no-multi-spaces': 0,                   // 禁止使用多个空格
@@ -46,6 +46,10 @@ module.exports = {
     'func-names': 0,                        // 要求或禁止使用命名的 function 表达式
     'object-shorthand': 0,                  // 要求或禁止对象字面量中方法和属性使用简写语法
     'no-lonely-if': 0,                      // 禁止 if 作为唯一的语句出现在 else 语句中
+    'lines-between-class-members': 0,       // 要求或禁止类成员之间出现空行
+    'consistent-return': 0,                 // 要求 return 语句要么总是指定返回的值，要么不指定
+    'class-methods-use-this': 1,            // 强制类方法使用 this
+    'dot-notation': 1,                      // 强制尽可能地使用点号
     'import/order': 0,
     'import/no-unresolved': 0,
     'import/newline-after-import': 0,
