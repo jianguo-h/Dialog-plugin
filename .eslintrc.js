@@ -1,15 +1,20 @@
 module.exports = {
-  extends: ['airbnb-base'],
   root: true,
+  parser: '@typescript-eslint/parser',
+  extends: [
+    'plugin:@typescript-eslint/recommended',
+    'prettier/@typescript-eslint',
+    'plugin:prettier/recommended'
+  ],
   parserOptions: {
-    parser: 'babel-eslint',
-    sourceType: 'module'
+    sourceType: 'module',
+    ecmaVersion: 2018
   },
   env: {
     browser: true,
     es6: true
   },
-  'rules': {
+  /* 'rules': {
     'semi': 2,                              // 要求或禁止使用分号代替 ASI
     'quotes': 0,                            // 强制使用一致的反勾号、双引号或单引号
     'no-new': 0,                            // 禁止使用 new 以避免产生副作用
@@ -54,5 +59,5 @@ module.exports = {
     'import/no-unresolved': 0,
     'import/newline-after-import': 0,
     'import/no-extraneous-dependencies': 0,
-  }
+  } */
 }
