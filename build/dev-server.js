@@ -13,6 +13,7 @@ const compiler = webpack(webpackDevConfig);
 const server = new webpackDevServer(compiler, {
   hot: true,
   disableHostCheck: true,		// 允许使用ip访问
+  open: true,
   stats: {
     colors: true
   }
