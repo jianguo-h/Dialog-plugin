@@ -2,19 +2,17 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: {
-    app: './src/js/dialog.js'
-  },
+  entry: './src/ts/dialog.ts',
   output: {
-    filename: 'js/dialog.min.js',
+    filename: 'js/[name].min.js',
     path: path.resolve(__dirname, '../dist')
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        use: ['ts-loader']
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
@@ -30,7 +28,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.json']
+    extensions: ['.ts']
   },
   plugins: [
     new HtmlWebpackPlugin({
