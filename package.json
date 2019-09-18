@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": ">  一款同时兼容移动端和PC端的弹出框插件",
   "main": ".eslintrc.js",
+  "types": "./types/index.d.ts",
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js"

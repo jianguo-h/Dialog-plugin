@@ -1,35 +1,52 @@
 import {
-  type, TEXT_NODE, EMPTY_NODE,
-  judgeNodeType, createTextNode, createEmptyNode,
-  setNodeCenter, platform, isPc
+  getType,
+  TEXT_NODE,
+  EMPTY_NODE,
+  judgeNodeType,
+  createTextNode,
+  createEmptyNode,
+  setNodeCenter,
+  platform,
+  isPc
 } from './utils';
 import '../less/dialog.less';
 
 class Dialog {
+  // 当前显示的已挂载的元素节点
+  dialogEl = null;
+  // 所有已经挂载的元素
+  mountedEls: HTMLElement[] = [];
+  timer = null;
+
   constructor() {
-    if(!(this instanceof Dialog)) {
+    if (!(this instanceof Dialog)) {
       return new Dialog();
     }
-    this.dialogEl = null;              // 当前显示的已挂载的元素节点
-    this.mountedEls = [];              // 所有已经挂载的元素
-    this.timer = null;
   }
   // 提示
-  message(opts) {
+  message(opts: any) {
     const params = {
-      duration: 3000,                      // 显示的时间, default: 3000
-      content: '这里放提示的内容',          // 提示的内容, default: ''
-      type: null,                          // 类型, 'success', 'warning' or 'error', default: null
-      callback: null,                      // duration后后执行的回调, 默认执行关闭, 若配置了callback需手动关闭
+      duration: 3000, // 显示的时间, default: 3000
+      content: '这里放提示的内容', // 提示的内容, default: ''
+      type: null, // 类型, 'success', 'warning' or 'error', default: null
+      callback: null, // duration后后执行的回调, 默认执行关闭, 若配置了callback需手动关闭
       ...opts
     };
     let { duration, content, callback, type: iconType } = params;
-    duration = (type(duration) === 'number' && !Number.isNaN(duration) && duration > 0) ? duration : 3000;
-    content = type(content) === 'string' && content.trim() !== '' ? content : '这里放提示的内容';
-    iconType = ['success', 'warning', 'error'].includes(iconType) ? iconType : null;
-    callback = type(callback) === 'function' ? callback : null;
+    duration =
+      getType(duration) === 'number' && !Number.isNaN(duration) && duration > 0
+        ? duration
+        : 3000;
+    content =
+      getType(content) === 'string' && content.trim() !== ''
+        ? content
+        : '这里放提示的内容';
+    iconType = ['success', 'warning', 'error'].includes(iconType)
+      ? iconType
+      : null;
+    callback = getType(callback) === 'function' ? callback : null;
 
-    this.timer && this.close();       // 关闭上一个
+    this.timer && this.close(); // 关闭上一个
     const vnode = {
       tag: 'div',
       props: {
@@ -40,8 +57,18 @@ class Dialog {
           tag: 'div',
           props: { className: 'dialog-content' },
           children: [
-            iconType ? { tag: 'span', props: { className: 'icon-' + iconType }, children: null } : null,
-            { tag: 'p', props: { className: 'dialog-message' }, children: content }
+            iconType
+              ? {
+                  tag: 'span',
+                  props: { className: 'icon-' + iconType },
+                  children: null
+                }
+              : null,
+            {
+              tag: 'p',
+              props: { className: 'dialog-message' },
+              children: content
+            }
           ]
         }
       ]
@@ -53,10 +80,9 @@ class Dialog {
 
     setNodeCenter(el);
     this.timer = setTimeout(() => {
-      if(!callback) {
+      if (!callback) {
         this.close();
-      }
-      else {
+      } else {
         callback();
       }
     }, duration);
@@ -73,32 +99,46 @@ class Dialog {
   modal(opts, modalType = 'confirm') {
     const isConfirm = modalType === 'confirm';
     const params = {
-      maskClose: true,                      // 点击遮罩层是否关闭(maskShow为true时方有效), default: true
-      content: '这里放提示的内容',          // 提示的内容, default: '这里放提示的内容'
-      confirmText: '确定',                  // 确定按钮的文字, default: '确定'
-      onConfirm: null,                      // 点击确定的回调, default: null, 配置了该参数需手动关闭
-      ...(isPc ? {
-        title: '这里是标题',                // 标题, default：'这里是标题'
-        showIconClose: true                 // 是否显示右上角关闭按钮, default：true
-      } : {}),
-      ...(isConfirm ? {
-        cancelText: '取消',                 // 取消按钮的文字, default: '取消'
-        onCancel: null                      // 点击取消的回调, default: null, 配置了该参数需手动关闭
-      } : {}),
-      ...(type(opts) === 'object' ? opts : {})
+      maskClose: true, // 点击遮罩层是否关闭(maskShow为true时方有效), default: true
+      content: '这里放提示的内容', // 提示的内容, default: '这里放提示的内容'
+      confirmText: '确定', // 确定按钮的文字, default: '确定'
+      onConfirm: null, // 点击确定的回调, default: null, 配置了该参数需手动关闭
+      ...(isPc
+        ? {
+            title: '这里是标题', // 标题, default：'这里是标题'
+            showIconClose: true // 是否显示右上角关闭按钮, default：true
+          }
+        : {}),
+      ...(isConfirm
+        ? {
+            cancelText: '取消', // 取消按钮的文字, default: '取消'
+            onCancel: null // 点击取消的回调, default: null, 配置了该参数需手动关闭
+          }
+        : {}),
+      ...(getType(opts) === 'object' ? opts : {})
     };
-    let { confirmText, content, onConfirm, maskClose, cancelText, onCancel, title, showIconClose } = params;
-    maskClose = type(maskClose) === 'boolean' ? maskClose : true;
-    content = type(content) === 'string' ? content : '这里放提示的内容';
-    confirmText = type(confirmText) === 'string' ? confirmText : '确定';
-    onConfirm = type(onConfirm) === 'function' ? onConfirm : null;
-    if(isPc) {
-      title = type(title) === 'string' ? title : '这里是标题';
-      showIconClose = type(showIconClose) === 'boolean' ? showIconClose : true;
+    let {
+      confirmText,
+      content,
+      onConfirm,
+      maskClose,
+      cancelText,
+      onCancel,
+      title,
+      showIconClose
+    } = params;
+    maskClose = getType(maskClose) === 'boolean' ? maskClose : true;
+    content = getType(content) === 'string' ? content : '这里放提示的内容';
+    confirmText = getType(confirmText) === 'string' ? confirmText : '确定';
+    onConfirm = getType(onConfirm) === 'function' ? onConfirm : null;
+    if (isPc) {
+      title = getType(title) === 'string' ? title : '这里是标题';
+      showIconClose =
+        getType(showIconClose) === 'boolean' ? showIconClose : true;
     }
-    if(isConfirm) {
-      cancelText = type(cancelText) === 'string' ? cancelText : '取消';
-      onCancel = type(onCancel) === 'function' ? onCancel : null;
+    if (isConfirm) {
+      cancelText = getType(cancelText) === 'string' ? cancelText : '取消';
+      onCancel = getType(onCancel) === 'function' ? onCancel : null;
     }
 
     const vnode = {
@@ -113,7 +153,7 @@ class Dialog {
             className: 'dialog-mask',
             on: {
               click: () => {
-                if(maskClose) {
+                if (maskClose) {
                   this.close();
                 }
               }
@@ -125,28 +165,32 @@ class Dialog {
           tag: 'div',
           props: { className: 'dialog-box gradientShow' },
           children: [
-            isPc ? {
-              tag: 'div',
-              props: { className: 'dialog-header' },
-              children: [
-                {
-                  tag: 'p',
-                  props: { className: 'dialog-title' },
-                  children: title
-                },
-                showIconClose ? {
-                  tag: 'span',
-                  props: {
-                    className: 'dialog-header-close',
-                    on: {
-                      click: () => {
-                        this.close();
-                      }
-                    }
-                  },
-                  children: null
-                } : null
-              ]
+            isPc
+              ? {
+                  tag: 'div',
+                  props: { className: 'dialog-header' },
+                  children: [
+                    {
+                      tag: 'p',
+                      props: { className: 'dialog-title' },
+                      children: title
+                    },
+                    showIconClose
+                      ? {
+                          tag: 'span',
+                          props: {
+                            className: 'dialog-header-close',
+                            on: {
+                              click: () => {
+                                this.close();
+                              }
+                            }
+                          },
+                          children: null
+                        }
+                      : null
+                  ]
+                }
             } : null,
             {
               tag: 'div',
@@ -207,46 +251,43 @@ class Dialog {
   // 关闭
   close() {
     let len = this.mountedEls.length - 1;
-    if(this.dialogEl) {
+    if (this.dialogEl) {
       this.dialogEl.parentNode.removeChild(this.dialogEl);
       this.mountedEls.splice(len, 1);
       len = this.mountedEls.length - 1;
       this.dialogEl = this.mountedEls[len];
     }
-    if(this.timer) {
+    if (this.timer) {
       clearTimeout(this.timer);
       this.timer = null;
     }
   }
   // 生成真实dom
   createElement(vnode) {
-    if(type(vnode) !== 'object') {
+    if (getType(vnode) !== 'object') {
       console.error('vnode is not an object', vnode);
       return;
     }
 
     let el;
     const { tag, props, children } = vnode;
-    const childrenType = type(children);
+    const childrenType = getType(children);
     const nodeType = judgeNodeType(vnode);
-    if(nodeType === TEXT_NODE) {
+    if (nodeType === TEXT_NODE) {
       el = createTextNode(children);
-    }
-    else if(nodeType === EMPTY_NODE) {
+    } else if (nodeType === EMPTY_NODE) {
       el = createEmptyNode(tag, props);
-    }
-    else {
+    } else {
       el = createEmptyNode(tag, props);
       let childNode;
-      if(childrenType === 'array') {
-        for(const child of children) {
-          if(child) {
+      if (childrenType === 'array') {
+        for (const child of children) {
+          if (child) {
             childNode = this.createElement(child);
             el.appendChild(childNode);
           }
         }
-      }
-      else if(childrenType === 'string' || childrenType === 'number') {
+      } else if (childrenType === 'string' || childrenType === 'number') {
         childNode = createTextNode(children);
         el.appendChild(childNode);
       }
@@ -260,7 +301,8 @@ class Dialog {
   }
 }
 
-if(typeof window !== 'undefined') {
+if (typeof window !== 'undefined') {
   window['Dialog'] = Dialog;
 }
+
 export default Dialog;
