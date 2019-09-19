@@ -1,53 +1,41 @@
 import {
-  getType,
-  TEXT_NODE,
-  EMPTY_NODE,
-  judgeNodeType,
   createTextNode,
   createEmptyNode,
   setNodeCenter,
   platform,
-  isPc
+  isPc,
+  IVnode
 } from './utils';
+import { IMessageOptions, IModalOptions, ModalType } from '../../types';
 import '../less/dialog.less';
+
+if (module.hot) {
+  module.hot.accept();
+}
 
 class Dialog {
   // 当前显示的已挂载的元素节点
-  dialogEl = null;
+  private dialogEl: HTMLElement | null = null;
   // 所有已经挂载的元素
-  mountedEls: HTMLElement[] = [];
-  timer = null;
+  private mountedEls: HTMLElement[] = [];
+  // 定时器
+  private timer: number | null = null;
 
   constructor() {
     if (!(this instanceof Dialog)) {
       return new Dialog();
     }
   }
-  // 提示
-  message(opts: any) {
-    const params = {
-      duration: 3000, // 显示的时间, default: 3000
-      content: '这里放提示的内容', // 提示的内容, default: ''
-      type: null, // 类型, 'success', 'warning' or 'error', default: null
-      callback: null, // duration后后执行的回调, 默认执行关闭, 若配置了callback需手动关闭
-      ...opts
-    };
-    let { duration, content, callback, type: iconType } = params;
-    duration =
-      getType(duration) === 'number' && !Number.isNaN(duration) && duration > 0
-        ? duration
-        : 3000;
-    content =
-      getType(content) === 'string' && content.trim() !== ''
-        ? content
-        : '这里放提示的内容';
-    iconType = ['success', 'warning', 'error'].includes(iconType)
-      ? iconType
-      : null;
-    callback = getType(callback) === 'function' ? callback : null;
 
-    this.timer && this.close(); // 关闭上一个
-    const vnode = {
+  // 提示
+  public message(opts: IMessageOptions): void {
+    const { duration, content, iconType, callback }: IMessageOptions = opts;
+
+    if (this.timer) {
+      this.close();
+    }
+
+    const vnode: IVnode = {
       tag: 'div',
       props: {
         className: 'dialog-' + platform + '-message gradientShow'
@@ -73,12 +61,14 @@ class Dialog {
         }
       ]
     };
-    const el = this.createElement(vnode);
+
+    const el = this.createRealElement(vnode);
     this.dialogEl = el;
     this.mounted(el);
     this.mountedEls.push(el);
 
     setNodeCenter(el);
+
     this.timer = setTimeout(() => {
       if (!callback) {
         this.close();
@@ -87,61 +77,33 @@ class Dialog {
       }
     }, duration);
   }
+
   // 确认模态框
-  confirm(opts) {
+  public confirm(opts: IModalOptions): void {
     this.modal(opts);
   }
+
   // 信息框
-  alert(opts) {
+  public alert(opts: IModalOptions): void {
     this.modal(opts, 'alert');
   }
+
   // 模态框
-  modal(opts, modalType = 'confirm') {
-    const isConfirm = modalType === 'confirm';
-    const params = {
-      maskClose: true, // 点击遮罩层是否关闭(maskShow为true时方有效), default: true
-      content: '这里放提示的内容', // 提示的内容, default: '这里放提示的内容'
-      confirmText: '确定', // 确定按钮的文字, default: '确定'
-      onConfirm: null, // 点击确定的回调, default: null, 配置了该参数需手动关闭
-      ...(isPc
-        ? {
-            title: '这里是标题', // 标题, default：'这里是标题'
-            showIconClose: true // 是否显示右上角关闭按钮, default：true
-          }
-        : {}),
-      ...(isConfirm
-        ? {
-            cancelText: '取消', // 取消按钮的文字, default: '取消'
-            onCancel: null // 点击取消的回调, default: null, 配置了该参数需手动关闭
-          }
-        : {}),
-      ...(getType(opts) === 'object' ? opts : {})
-    };
-    let {
-      confirmText,
-      content,
+  private modal(opts: IModalOptions, modalType: ModalType = 'confirm'): void {
+    const {
+      confirmText = '确定',
+      cancelText = '取消',
       onConfirm,
-      maskClose,
-      cancelText,
       onCancel,
       title,
-      showIconClose
-    } = params;
-    maskClose = getType(maskClose) === 'boolean' ? maskClose : true;
-    content = getType(content) === 'string' ? content : '这里放提示的内容';
-    confirmText = getType(confirmText) === 'string' ? confirmText : '确定';
-    onConfirm = getType(onConfirm) === 'function' ? onConfirm : null;
-    if (isPc) {
-      title = getType(title) === 'string' ? title : '这里是标题';
-      showIconClose =
-        getType(showIconClose) === 'boolean' ? showIconClose : true;
-    }
-    if (isConfirm) {
-      cancelText = getType(cancelText) === 'string' ? cancelText : '取消';
-      onCancel = getType(onCancel) === 'function' ? onCancel : null;
-    }
+      content,
+      maskClose = true,
+      showIconClose = true
+    }: IModalOptions = opts;
 
-    const vnode = {
+    const isConfirm: boolean = modalType === 'confirm';
+
+    const vnode: IVnode = {
       tag: 'div',
       props: {
         className: 'dialog-' + platform + '-' + modalType
@@ -191,45 +153,49 @@ class Dialog {
                       : null
                   ]
                 }
-            } : null,
+              : null,
             {
               tag: 'div',
               props: { className: 'dialog-content' },
               children: [
-                { tag: 'p', props: { className: 'dialog-message' }, children: content }
+                {
+                  tag: 'p',
+                  props: { className: 'dialog-message' },
+                  children: content
+                }
               ]
             },
             {
               tag: 'div',
               props: { className: 'dialog-footer' },
               children: [
-                isConfirm ? {
-                  tag: 'span',
-                  props: {
-                    className: 'dialog-cancel-btn',
-                    on: {
-                      click: () => {
-                        if(onCancel) {
-                          onCancel();
+                isConfirm
+                  ? {
+                      tag: 'span',
+                      props: {
+                        className: 'dialog-cancel-btn',
+                        on: {
+                          click: () => {
+                            if (onCancel) {
+                              onCancel();
+                            } else {
+                              this.close();
+                            }
+                          }
                         }
-                        else {
-                          this.close();
-                        }
-                      }
+                      },
+                      children: cancelText
                     }
-                  },
-                  children: cancelText
-                } : null,
+                  : null,
                 {
                   tag: 'span',
                   props: {
                     className: 'dialog-confirm-btn',
                     on: {
                       click: () => {
-                        if(onConfirm) {
+                        if (onConfirm) {
                           onConfirm();
-                        }
-                        else {
+                        } else {
                           this.close();
                         }
                       }
@@ -243,15 +209,17 @@ class Dialog {
         }
       ]
     };
-    const el = this.createElement(vnode);
+
+    const el = this.createRealElement(vnode);
     this.mounted(el);
     this.mountedEls.push(el);
     this.dialogEl = el;
   }
+
   // 关闭
-  close() {
-    let len = this.mountedEls.length - 1;
-    if (this.dialogEl) {
+  private close(): void {
+    let len: number = this.mountedEls.length - 1;
+    if (this.dialogEl && this.dialogEl.parentNode) {
       this.dialogEl.parentNode.removeChild(this.dialogEl);
       this.mountedEls.splice(len, 1);
       len = this.mountedEls.length - 1;
@@ -262,44 +230,39 @@ class Dialog {
       this.timer = null;
     }
   }
-  // 生成真实dom
-  createElement(vnode) {
-    if (getType(vnode) !== 'object') {
-      console.error('vnode is not an object', vnode);
-      return;
-    }
 
-    let el;
+  // 生成真实dom
+  private createRealElement(vnode: IVnode): HTMLElement {
     const { tag, props, children } = vnode;
-    const childrenType = getType(children);
-    const nodeType = judgeNodeType(vnode);
-    if (nodeType === TEXT_NODE) {
-      el = createTextNode(children);
-    } else if (nodeType === EMPTY_NODE) {
-      el = createEmptyNode(tag, props);
-    } else {
-      el = createEmptyNode(tag, props);
-      let childNode;
-      if (childrenType === 'array') {
-        for (const child of children) {
-          if (child) {
-            childNode = this.createElement(child);
-            el.appendChild(childNode);
+    const el = createEmptyNode(tag, props);
+
+    let childNode;
+    if (Array.isArray(children)) {
+      for (const child of children) {
+        if (child) {
+          if (typeof child === 'string' || typeof child === 'number') {
+            childNode = createTextNode(child);
+          } else {
+            childNode = this.createRealElement(child);
           }
+          el.appendChild(childNode);
         }
-      } else if (childrenType === 'string' || childrenType === 'number') {
-        childNode = createTextNode(children);
-        el.appendChild(childNode);
       }
+    } else if (typeof children === 'string' || typeof children === 'number') {
+      childNode = createTextNode(children);
+      el.appendChild(childNode);
     }
 
     return el;
   }
+
   // 将真实dom挂载到body上
-  mounted(el) {
+  private mounted(el: HTMLElement): void {
     document.body.appendChild(el);
   }
 }
+
+declare const window: Window & { Dialog: typeof Dialog };
 
 if (typeof window !== 'undefined') {
   window['Dialog'] = Dialog;
