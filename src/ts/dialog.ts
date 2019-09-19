@@ -89,7 +89,10 @@ class Dialog {
   }
 
   // 模态框
-  private modal(opts: IModalOptions, modalType: ModalType = 'confirm'): void {
+  private modal(
+    opts: IModalOptions = {},
+    modalType: ModalType = 'confirm'
+  ): void {
     const {
       confirmText = '确定',
       cancelText = '取消',
