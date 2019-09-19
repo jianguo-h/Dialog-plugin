@@ -5,6 +5,7 @@ const webpackBaseConfig = require('./webpack.base.config');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const webpackProdConfig = webpackMerge(webpackBaseConfig, {
   devtool: false,
@@ -21,6 +22,8 @@ const webpackProdConfig = webpackMerge(webpackBaseConfig, {
     ]
   },
   plugins: [
+    // 删除dist文件夹
+    new CleanWebpackPlugin(),
     // 提取css
     new MiniCssExtractPlugin({
       filename: 'css/dialog.min.css'
@@ -28,7 +31,6 @@ const webpackProdConfig = webpackMerge(webpackBaseConfig, {
     // 压缩css
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.css$/g,
-      cssProcessor: require('cssnano'),
       cssProcessorOptions: {
         discardComments: {
           removeAll: true

@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: './src/ts/dialog.ts',
   output: {
-    filename: 'js/[name].min.js',
+    filename: 'js/dialog.min.js',
     path: path.resolve(__dirname, '../dist')
   },
   module: {
