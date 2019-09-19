@@ -17,7 +17,12 @@ const webpackProdConfig = webpackMerge(webpackBaseConfig, {
     rules: [
       {
         test: /\.less$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader']
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'less-loader'
+        ]
       }
     ]
   },
@@ -43,18 +48,21 @@ const webpackProdConfig = webpackMerge(webpackBaseConfig, {
       uglifyOptions: {
         warnings: false,
         compress: {
-          drop_console: true,   // 去除日志
-          drop_debugger: true   // 去除debugger
+          /* eslint-disable @typescript-eslint/camelcase */
+          drop_console: true, // 去除日志
+          drop_debugger: true // 去除debugger
         }
       },
       parallel: true
     }),
     // 拷贝静态文件
-    new CopyWebpackPlugin([{
-      from: path.resolve(__dirname, '../static'),
-      to: path.resolve(__dirname, '../dist/static'),
-      ignore: ['.*']
-    }])
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../static'),
+        to: path.resolve(__dirname, '../dist/static'),
+        ignore: ['.*']
+      }
+    ])
   ]
 });
 

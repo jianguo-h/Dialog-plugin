@@ -16,9 +16,7 @@ const webpackDevConfig = webpackMerge(webpackBaseConfig, {
       }
     ]
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ]
+  plugins: [new webpack.HotModuleReplacementPlugin()]
 });
 
 module.exports = webpackDevConfig;

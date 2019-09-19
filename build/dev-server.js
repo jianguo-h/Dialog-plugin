@@ -6,7 +6,7 @@ const url = 'http://localhost:' + port;
 
 const options = {
   hot: true,
-  disableHostCheck: true,		// 允许使用ip访问
+  disableHostCheck: true, // 允许使用ip访问
   open: true,
   stats: {
     colors: true
