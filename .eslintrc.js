@@ -15,6 +15,9 @@ module.exports = {
     es6: true
   },
   'rules': {
-    '@typescript-eslint/no-var-requires': 'warn'
+    '@typescript-eslint/no-var-requires': 'warn',
+    '@typescript-eslint/explicit-function-return-type': ['error', {
+      allowExpressions: true
+    }]
   }
 }
