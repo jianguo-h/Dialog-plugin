@@ -18,6 +18,7 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'warn',
     '@typescript-eslint/explicit-function-return-type': ['error', {
       allowExpressions: true
-    }]
+    }],
+    '@typescript-eslint/interface-name-prefix': 'off'
   }
 }
