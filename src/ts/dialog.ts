@@ -28,8 +28,13 @@ class Dialog {
   }
 
   // 提示
-  public message(opts: IMessageOptions): void {
-    const { duration, content, iconType, callback }: IMessageOptions = opts;
+  public message(opts: IMessageOptions = {}): void {
+    const {
+      duration = 3000,
+      content,
+      iconType,
+      callback
+    }: IMessageOptions = opts;
 
     if (this.timer) {
       this.close();
@@ -69,7 +74,7 @@ class Dialog {
 
     setNodeCenter(el);
 
-    this.timer = setTimeout(() => {
+    this.timer = window.setTimeout(() => {
       if (!callback) {
         this.close();
       } else {
@@ -265,7 +270,11 @@ class Dialog {
   }
 }
 
-declare const window: Window & { Dialog: typeof Dialog };
+declare global {
+  interface Window {
+    Dialog: typeof Dialog;
+  }
+}
 
 if (typeof window !== 'undefined') {
   window['Dialog'] = Dialog;
