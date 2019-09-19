@@ -17,9 +17,3 @@ export interface IModalOptions {
 }
 
 export type ModalType = 'confirm' | 'alert';
-
-declare global {
-  interface Window {
-    Dialog: any;
-  }
-}
