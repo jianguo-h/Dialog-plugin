@@ -4,14 +4,10 @@ import {
   setNodeCenter,
   platform,
   isPc,
-  IVnode
+  IVnode,
 } from './utils';
 import { IMessageOptions, IModalOptions, ModalType } from '../../types';
 import '../less/dialog.less';
-
-if (module.hot) {
-  module.hot.accept();
-}
 
 class Dialog {
   // 当前显示的已挂载的元素节点
@@ -33,7 +29,7 @@ class Dialog {
       duration = 3000,
       content,
       iconType,
-      callback
+      callback,
     }: IMessageOptions = opts;
 
     if (this.timer) {
@@ -43,7 +39,7 @@ class Dialog {
     const vnode: IVnode = {
       tag: 'div',
       props: {
-        className: 'dialog-' + platform + '-message gradientShow'
+        className: 'dialog-' + platform + '-message gradientShow',
       },
       children: [
         {
@@ -54,17 +50,17 @@ class Dialog {
               ? {
                   tag: 'span',
                   props: { className: 'icon-' + iconType },
-                  children: null
+                  children: null,
                 }
               : null,
             {
               tag: 'p',
               props: { className: 'dialog-message' },
-              children: content
-            }
-          ]
-        }
-      ]
+              children: content,
+            },
+          ],
+        },
+      ],
     };
 
     const el = this.createRealElement(vnode);
@@ -106,7 +102,7 @@ class Dialog {
       title,
       content,
       maskClose = true,
-      showIconClose = true
+      showIconClose = true,
     }: IModalOptions = opts;
 
     const isConfirm: boolean = modalType === 'confirm';
@@ -114,7 +110,7 @@ class Dialog {
     const vnode: IVnode = {
       tag: 'div',
       props: {
-        className: 'dialog-' + platform + '-' + modalType
+        className: 'dialog-' + platform + '-' + modalType,
       },
       children: [
         {
@@ -126,10 +122,10 @@ class Dialog {
                 if (maskClose) {
                   this.close();
                 }
-              }
-            }
+              },
+            },
           },
-          children: null
+          children: null,
         },
         {
           tag: 'div',
@@ -143,7 +139,7 @@ class Dialog {
                     {
                       tag: 'p',
                       props: { className: 'dialog-title' },
-                      children: title
+                      children: title,
                     },
                     showIconClose
                       ? {
@@ -153,13 +149,13 @@ class Dialog {
                             on: {
                               click: () => {
                                 this.close();
-                              }
-                            }
+                              },
+                            },
                           },
-                          children: null
+                          children: null,
                         }
-                      : null
-                  ]
+                      : null,
+                  ],
                 }
               : null,
             {
@@ -169,9 +165,9 @@ class Dialog {
                 {
                   tag: 'p',
                   props: { className: 'dialog-message' },
-                  children: content
-                }
-              ]
+                  children: content,
+                },
+              ],
             },
             {
               tag: 'div',
@@ -189,10 +185,10 @@ class Dialog {
                             } else {
                               this.close();
                             }
-                          }
-                        }
+                          },
+                        },
                       },
-                      children: cancelText
+                      children: cancelText,
                     }
                   : null,
                 {
@@ -206,16 +202,16 @@ class Dialog {
                         } else {
                           this.close();
                         }
-                      }
-                    }
+                      },
+                    },
                   },
-                  children: confirmText
-                }
-              ]
-            }
-          ]
-        }
-      ]
+                  children: confirmText,
+                },
+              ],
+            },
+          ],
+        },
+      ],
     };
 
     const el = this.createRealElement(vnode);

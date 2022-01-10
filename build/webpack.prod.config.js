@@ -1,18 +1,13 @@
-const path = require('path');
-const webpackMerge = require('webpack-merge');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { merge } = require('webpack-merge');
 const webpackBaseConfig = require('./webpack.base.config');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
-const webpackProdConfig = webpackMerge(webpackBaseConfig, {
+const webpackProdConfig = merge(webpackBaseConfig, {
   devtool: false,
   mode: 'production',
-  output: {
-    publicPath: './'
-  },
   module: {
     rules: [
       {
@@ -21,49 +16,49 @@ const webpackProdConfig = webpackMerge(webpackBaseConfig, {
           MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
-          'less-loader'
-        ]
-      }
-    ]
+          'less-loader',
+        ],
+      },
+    ],
   },
   plugins: [
-    // 删除dist文件夹
     new CleanWebpackPlugin(),
-    // 提取css
     new MiniCssExtractPlugin({
-      filename: 'css/dialog.min.css'
+      filename: 'dialog.min.css',
     }),
-    // 压缩css
-    new OptimizeCssAssetsPlugin({
-      assetNameRegExp: /\.css$/g,
-      cssProcessorOptions: {
-        discardComments: {
-          removeAll: true
-        }
-      },
-      canPrint: true
-    }),
-    // 压缩混淆js
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        warnings: false,
-        compress: {
-          /* eslint-disable @typescript-eslint/camelcase */
-          drop_console: true, // 去除日志
-          drop_debugger: true // 去除debugger
-        }
-      },
-      parallel: true
-    }),
-    // 拷贝静态文件
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../static'),
-        to: path.resolve(__dirname, '../dist/static'),
-        ignore: ['.*']
-      }
-    ])
-  ]
+  ],
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new OptimizeCssAssetsPlugin({
+        assetNameRegExp: /\.css$/g,
+        cssProcessorOptions: {
+          discardComments: { removeAll: true },
+          minifyFontValues: { removeQuotes: false },
+        },
+        canPrint: true,
+      }),
+      new TerserPlugin({
+        parallel: true,
+        extractComments: false,
+        terserOptions: {
+          keep_fnames: false,
+          keep_classnames: false,
+          sourceMap: false,
+          compress: {
+            drop_console: true,
+            drop_debugger: true,
+            comparisons: false,
+            inline: 2,
+          },
+          output: {
+            ascii_only: true,
+            comments: false,
+          },
+        },
+      }),
+    ],
+  },
 });
 
 module.exports = webpackProdConfig;

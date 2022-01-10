@@ -1,24 +1,35 @@
 const webpack = require('webpack');
-const webpackDevServer = require('webpack-dev-server');
+const WebpackDevServer = require('webpack-dev-server');
 const webpackDevConfig = require('./webpack.dev.config');
-const port = 8080;
-const url = 'http://localhost:' + port;
+const detectPort = require('detect-port');
+const path = require('path');
 
 const options = {
-  hot: true,
-  disableHostCheck: true, // 允许使用ip访问
+  historyApiFallback: true,
   open: true,
-  stats: {
-    colors: true
-  }
+  hot: true,
+  liveReload: true,
+  client: {
+    overlay: {
+      warnings: false,
+      errors: true,
+    },
+  },
 };
 
-webpackDevServer.addDevServerEntrypoints(webpackDevConfig, options);
-
+let port = 8080;
 const compiler = webpack(webpackDevConfig);
 
-const server = new webpackDevServer(compiler, options);
+async function startDevServer() {
+  const _port = await detectPort(port);
+  if (_port === port) {
+    options.port = port;
+    const server = new WebpackDevServer(options, compiler);
+    await server.start();
+    return;
+  }
+  port += 1;
+  await startDevServer();
+}
 
-server.listen(port, () => {
-  console.log('> Listening at ' + url);
-});
+startDevServer();

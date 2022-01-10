@@ -1,22 +1,29 @@
 const webpack = require('webpack');
-const webpackMerge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const webpackBaseConfig = require('./webpack.base.config');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const webpackDevConfig = webpackMerge(webpackBaseConfig, {
-  devtool: '#cheap-module-eval-source-map',
+const webpackDevConfig = merge(webpackBaseConfig, {
+  devtool: 'eval-cheap-module-source-map',
   mode: 'development',
   output: {
-    publicPath: '/'
+    publicPath: '/',
   },
   module: {
     rules: [
       {
         test: /\.less$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']
-      }
-    ]
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
+      },
+    ],
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()]
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      filename: 'index.html',
+      inject: true,
+    }),
+  ],
 });
 
 module.exports = webpackDevConfig;
