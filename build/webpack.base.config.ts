@@ -1,6 +1,7 @@
-const path = require('path');
+import path from 'path'
+import { Configuration } from 'webpack';
 
-module.exports = {
+const baseConfig: Configuration = {
   entry: './src/ts/dialog.ts',
   output: {
     filename: 'dialog.min.js',
@@ -36,3 +37,5 @@ module.exports = {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
   },
 };
+
+export default baseConfig

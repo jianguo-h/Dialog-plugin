@@ -1,7 +1,6 @@
-const webpack = require('webpack');
-const { merge } = require('webpack-merge');
-const webpackBaseConfig = require('./webpack.base.config');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import { merge } from 'webpack-merge';
+import webpackBaseConfig from './webpack.base.config';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const webpackDevConfig = merge(webpackBaseConfig, {
   devtool: 'eval-cheap-module-source-map',
@@ -26,4 +25,4 @@ const webpackDevConfig = merge(webpackBaseConfig, {
   ],
 });
 
-module.exports = webpackDevConfig;
+export default webpackDevConfig;

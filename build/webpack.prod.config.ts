@@ -1,9 +1,9 @@
-const { merge } = require('webpack-merge');
-const webpackBaseConfig = require('./webpack.base.config');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+import { merge } from 'webpack-merge';
+import webpackBaseConfig from './webpack.base.config';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 
 const webpackProdConfig = merge(webpackBaseConfig, {
   devtool: false,
@@ -61,4 +61,4 @@ const webpackProdConfig = merge(webpackBaseConfig, {
   },
 });
 
-module.exports = webpackProdConfig;
+export default webpackProdConfig;

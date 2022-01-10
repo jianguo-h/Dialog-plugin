@@ -1,10 +1,9 @@
-const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
-const webpackDevConfig = require('./webpack.dev.config');
-const detectPort = require('detect-port');
-const path = require('path');
+import webpack from 'webpack';
+import WebpackDevServer from 'webpack-dev-server';
+import webpackDevConfig from './webpack.dev.config';
+import detectPort from 'detect-port';
 
-const options = {
+const options: WebpackDevServer.Configuration = {
   historyApiFallback: true,
   open: true,
   hot: true,
