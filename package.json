@@ -2,8 +2,8 @@
   "name": "dialog-plugin",
   "version": "1.0.0",
   "description": ">  一款同时兼容移动端和PC端的弹出框插件",
-  "main": ".eslintrc.js",
-  "types": "./types/index.d.ts",
+  "main": "dist/dialog.min.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "ts-node --project tsconfig.webpack.json build/dev-server.ts",
     "build": "ts-node --project tsconfig.webpack.json build/build.ts"
@@ -12,6 +12,13 @@
     "type": "git",
     "url": "git+https://github.com/jianguo-h/Dialog-plugin.git"
   },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "typescript",
+    "Dialog"
+  ],
   "author": "jianguo",
   "license": "ISC",
   "bugs": {

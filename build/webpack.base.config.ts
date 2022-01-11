@@ -1,8 +1,8 @@
-import path from 'path'
+import path from 'path';
 import { Configuration } from 'webpack';
 
 const baseConfig: Configuration = {
-  entry: './src/ts/dialog.ts',
+  entry: './src/index.ts',
   output: {
     filename: 'dialog.min.js',
     path: path.resolve(__dirname, '../dist'),
@@ -26,7 +26,7 @@ const baseConfig: Configuration = {
             loader: 'url-loader',
             options: {
               limit: 1024 * 10,
-              name: 'static/media/[name].[hash:8].[ext]',
+              name: 'media/[name].[hash:8].[ext]',
             },
           },
         ],
@@ -38,4 +38,4 @@ const baseConfig: Configuration = {
   },
 };
 
-export default baseConfig
+export default baseConfig;
