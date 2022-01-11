@@ -13,24 +13,31 @@
 // 信息框样式, 确认模态框
 .dialog-mobile-alert,
 .dialog-mobile-confirm {
-	.dialog-box {
-		width: @dialog-mobile-box-width;
+  .dialog-box {
+    width: @dialog-mobile-box-width;
     max-width: @dialog-mobile-box-max-width;
-		.dialog-content { 
-      .dialog-message { max-width: @dialog-mobile-box-message-max-width; }
-			padding: @dialog-mobile-box-content-vertical-padding @padding;
-		}
+    .dialog-content {
+      .dialog-message {
+        max-width: @dialog-mobile-box-message-max-width;
+      }
+      padding: @dialog-mobile-box-content-vertical-padding @padding;
+    }
     .dialog-footer {
       border-top: 1px solid #eee;
-      .dialog-cancel-btn, .dialog-confirm-btn {
+      .dialog-cancel-btn,
+      .dialog-confirm-btn {
         flex: 1;
         height: @mobile-btn-height;
         line-height: @mobile-btn-height;
       }
-      .dialog-cancel-btn { border-right: 1px solid #eee; }
-      .dialog-confirm-btn { color: @confirm-btn-font-color; }
+      .dialog-cancel-btn {
+        border-right: 1px solid #eee;
+      }
+      .dialog-confirm-btn {
+        color: @confirm-btn-font-color;
+      }
     }
-	}
+  }
 }
 
 /* .dialog-box-no-flex {

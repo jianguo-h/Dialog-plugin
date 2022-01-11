@@ -34,24 +34,29 @@
         width: 16px;
         height: 16px;
         cursor: pointer;
-        background: url(../../static/images/icon-close.png) center center no-repeat;
+        background: url(../static/images/icon-close.png) center center no-repeat;
       }
     }
     .dialog-content {
-      .dialog-message { max-width: @dialog-pc-box-message-max-width; }
+      .dialog-message {
+        max-width: @dialog-pc-box-message-max-width;
+      }
       padding: @dialog-pc-box-content-vertical-padding @padding;
     }
     .dialog-footer {
       justify-content: flex-end;
       padding: 0 @padding 10px;
-      .dialog-cancel-btn, .dialog-confirm-btn {
+      .dialog-cancel-btn,
+      .dialog-confirm-btn {
         height: @pc-btn-height;
         line-height: @pc-btn-height;
         border-radius: 2px;
         padding: 0 15px;
-        transition: opacity ease .3s;
+        transition: opacity ease 0.3s;
         border: 1px solid #dedede;
-        &:hover { opacity: .9; }
+        &:hover {
+          opacity: 0.9;
+        }
       }
       .dialog-confirm-btn {
         color: #fff;
