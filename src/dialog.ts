@@ -1,20 +1,19 @@
-import { IMessageOptions, IModalOptions, ModalType } from './types';
+import { IMessageOptions, IModalOptions, ModalType, IVnode } from './types';
 import {
   createTextNode,
   createEmptyNode,
   setNodeCenter,
   platform,
   isPc,
-  IVnode,
 } from './helpers/utils';
 
 class Dialog {
   // 当前显示的已挂载的元素节点
-  private dialogEl: HTMLElement | null = null;
+  dialogEl: HTMLElement | null = null;
   // 所有已经挂载的元素
-  private mountedEls: HTMLElement[] = [];
+  mountedEls: HTMLElement[] = [];
   // 定时器
-  private timer: number | null = null;
+  timer: NodeJS.Timeout | null = null;
 
   constructor() {
     if (!(this instanceof Dialog)) {
@@ -23,7 +22,7 @@ class Dialog {
   }
 
   // 提示
-  public message(opts: IMessageOptions = {}): void {
+  message(opts: IMessageOptions = {}) {
     const {
       duration = 3000,
       content,
@@ -69,7 +68,7 @@ class Dialog {
 
     setNodeCenter(el);
 
-    this.timer = window.setTimeout(() => {
+    this.timer = setTimeout(() => {
       if (!callback) {
         this.close();
       } else {
@@ -79,20 +78,17 @@ class Dialog {
   }
 
   // 确认模态框
-  public confirm(opts: IModalOptions): void {
+  confirm(opts: IModalOptions) {
     this.modal(opts);
   }
 
   // 信息框
-  public alert(opts: IModalOptions): void {
+  alert(opts: IModalOptions) {
     this.modal(opts, 'alert');
   }
 
   // 模态框
-  private modal(
-    opts: IModalOptions = {},
-    modalType: ModalType = 'confirm'
-  ): void {
+  modal(opts: IModalOptions = {}, modalType: ModalType = 'confirm') {
     const {
       confirmText = '确定',
       cancelText = '取消',
@@ -102,7 +98,7 @@ class Dialog {
       content,
       maskClose = true,
       showIconClose = true,
-    }: IModalOptions = opts;
+    } = opts;
 
     const isConfirm: boolean = modalType === 'confirm';
 
@@ -220,7 +216,7 @@ class Dialog {
   }
 
   // 关闭
-  private close(): void {
+  close() {
     let len: number = this.mountedEls.length - 1;
     if (this.dialogEl && this.dialogEl.parentNode) {
       this.dialogEl.parentNode.removeChild(this.dialogEl);
@@ -235,7 +231,7 @@ class Dialog {
   }
 
   // 生成真实dom
-  private createRealElement(vnode: IVnode): HTMLElement {
+  createRealElement(vnode: IVnode) {
     const { tag, props, children } = vnode;
     const el = createEmptyNode(tag, props);
 
@@ -260,7 +256,7 @@ class Dialog {
   }
 
   // 将真实dom挂载到body上
-  private mounted(el: HTMLElement): void {
+  mounted(el: HTMLElement) {
     document.body.appendChild(el);
   }
 }

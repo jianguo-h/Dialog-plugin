@@ -1,46 +1,58 @@
-type Children = string | number | null;
+import { IVnodeProps, VNodeEvents, VNodeStyles } from '../types';
 
-export interface IVnode {
-  tag?: string;
-  props?: {
-    [property: string]: any;
-  };
-  children?: (IVnode | Children)[] | Children;
+function setNodeStyle(node: HTMLElement, style: VNodeStyles = {}) {
+  for (const [property, value] of Object.entries(style)) {
+    if (!property) {
+      continue;
+    }
+    node.style.setProperty(property, value ?? '');
+  }
+}
+
+function setNodeEvent(node: HTMLElement, evts: VNodeEvents = {}) {
+  for (const [evt, cb] of Object.entries(evts)) {
+    if (!evt || !cb) {
+      continue;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    node.addEventListener(evt as any, cb);
+  }
 }
 
 // 设置节点的属性
-export function setProps(node: any, props: IVnode['props'] = {}): HTMLElement {
-  for (const [key, val] of Object.entries(props)) {
-    if (key === 'className') {
-      node.setAttribute('class', val);
-    } else if (key === 'on') {
-      for (const [event, cb] of Object.entries(val)) {
-        if (typeof cb === 'function') {
-          node['on' + event] = cb;
-        }
-      }
-    } else if (key === 'style') {
-      for (const [property, value] of Object.entries(val)) {
-        node.style[property] = value;
-      }
+export function setProps(node: HTMLElement, props: IVnodeProps = {}) {
+  for (const key of Object.keys(props)) {
+    const newKey = key as keyof IVnodeProps;
+    const propVal = props[newKey];
+    if (!propVal) {
+      continue;
+    }
+
+    if (newKey === 'className') {
+      node.className = propVal as string;
+    } else if (newKey === 'style') {
+      setNodeStyle(node, propVal as VNodeStyles);
+    } else if (newKey === 'on') {
+      setNodeEvent(node, propVal as VNodeEvents);
     } else {
-      node.setAttribute(key, val);
+      node.setAttribute(key, propVal as string);
     }
   }
+
   return node;
 }
 
 // 创建一个文本节点
-export function createTextNode(val: string | number): Text {
+export function createTextNode(val: string | number) {
   return document.createTextNode(val.toString());
 }
 
 // 创建一个空节点
 export function createEmptyNode(
-  tag: IVnode['tag'] = 'div',
-  props: IVnode['props']
-): HTMLElement {
-  const node = document.createElement(tag);
+  tag?: keyof HTMLElementTagNameMap,
+  props?: IVnodeProps
+) {
+  const node = document.createElement(tag ?? 'div');
   if (!props) {
     return node;
   }
@@ -48,7 +60,7 @@ export function createEmptyNode(
 }
 
 // 检测平台, pc or mobile
-export function judgePlatform(): 'mobile' | 'pc' {
+export function judgePlatform() {
   const userAgent = navigator.userAgent.toLowerCase();
   const agents = ['android', 'iphone', 'windows phone', 'ipad', 'ipod'];
   for (const agent of agents) {
@@ -60,7 +72,7 @@ export function judgePlatform(): 'mobile' | 'pc' {
 }
 
 // 设置元素横向垂直居中
-export function setNodeCenter(node: HTMLElement): void {
+export function setNodeCenter(node: HTMLElement) {
   const { offsetWidth, offsetHeight } = node;
   const props = {
     style: {
@@ -72,4 +84,5 @@ export function setNodeCenter(node: HTMLElement): void {
 }
 
 export const platform = judgePlatform();
+
 export const isPc = platform !== 'mobile';

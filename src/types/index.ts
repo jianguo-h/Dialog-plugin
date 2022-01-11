@@ -17,3 +17,34 @@ export interface IModalOptions {
 }
 
 export type ModalType = 'confirm' | 'alert';
+
+export type VNodeStyles = Partial<
+  Omit<
+    CSSStyleDeclaration,
+    | 'getPropertyPriority'
+    | 'getPropertyValue'
+    | 'item'
+    | 'removeProperty'
+    | 'setProperty'
+    | 'parentRule'
+    | 'length'
+  >
+>;
+
+export type VNodeEvents = {
+  [K in keyof HTMLElementEventMap]?: (evt: HTMLElementEventMap[K]) => unknown;
+};
+
+export interface IVnodeProps {
+  className?: string;
+  style?: VNodeStyles;
+  on?: VNodeEvents;
+}
+
+type VNodeChildren = string | number | null;
+
+export interface IVnode {
+  tag?: keyof HTMLElementTagNameMap;
+  props?: IVnodeProps;
+  children?: (IVnode | VNodeChildren)[] | VNodeChildren;
+}
