@@ -1,3 +1,4 @@
+import { IMessageOptions, IModalOptions, ModalType } from './types';
 import {
   createTextNode,
   createEmptyNode,
@@ -5,9 +6,7 @@ import {
   platform,
   isPc,
   IVnode,
-} from './utils';
-import { IMessageOptions, IModalOptions, ModalType } from '../../types';
-import '../less/dialog.less';
+} from './helpers/utils';
 
 class Dialog {
   // 当前显示的已挂载的元素节点
@@ -264,16 +263,6 @@ class Dialog {
   private mounted(el: HTMLElement): void {
     document.body.appendChild(el);
   }
-}
-
-declare global {
-  interface Window {
-    Dialog: typeof Dialog;
-  }
-}
-
-if (typeof window !== 'undefined') {
-  window['Dialog'] = Dialog;
 }
 
 export default Dialog;

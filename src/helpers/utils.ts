@@ -65,8 +65,8 @@ export function setNodeCenter(node: HTMLElement): void {
   const props = {
     style: {
       marginLeft: -1 * Math.round(offsetWidth / 2) + 'px',
-      marginTop: -1 * Math.round(offsetHeight / 2) + 'px'
-    }
+      marginTop: -1 * Math.round(offsetHeight / 2) + 'px',
+    },
   };
   setProps(node, props);
 }

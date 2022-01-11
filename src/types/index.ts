@@ -1,7 +1,7 @@
 export interface IMessageOptions {
   duration?: number;
   content?: string;
-  iconType?: 'success' | 'warning' | 'error' | null;
+  iconType?: 'success' | 'warning' | 'error';
   callback?: () => void;
 }
 
