@@ -25,7 +25,7 @@ module.exports = {
     '@typescript-eslint/no-empty-interface': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-inferrable-types': [
-      'error',
+      'warn',
       {
         ignoreParameters: true,
       },
@@ -46,13 +46,7 @@ module.exports = {
         trailingUnderscore: 'forbid',
       },
       {
-        selector: 'property',
-        format: ['strictCamelCase', 'snake_case', 'StrictPascalCase'],
-        leadingUnderscore: 'forbid',
-        trailingUnderscore: 'forbid',
-      },
-      {
-        selector: 'variableLike',
+        selector: 'default',
         format: [
           'strictCamelCase',
           'snake_case',
