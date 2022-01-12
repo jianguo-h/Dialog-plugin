@@ -1,6 +1,7 @@
 module.exports = {
-  extends: 'stylelint-prettier/recommended',
+  extends: ['stylelint-config-standard', 'stylelint-prettier/recommended'],
   rules: {
+    'keyframes-name-pattern': null,
     'comment-empty-line-before': 'always',
     'rule-empty-line-before': [
       'always',
