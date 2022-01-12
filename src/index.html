@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<title>dialog</title>
-</head>
-<body>
-	<button id = "test1">测试dialog message</button>
-	<button id = "test2">测试dialog confirm</button>
-	<button id = "test3">测试dialog alert</button>
-	<!-- <div class="dialog-pc-confirm">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <title>dialog</title>
+  </head>
+  <body>
+    <button id="test1">测试dialog message</button>
+    <button id="test2">测试dialog confirm</button>
+    <button id="test3">测试dialog alert</button>
+    <!-- <div class="dialog-pc-confirm">
 		<div class="dialog-mask"></div>
-		<div class="dialog-box gradientShow">
+		<div class="dialog-box gradient-show">
 			<div class="dialog-header">
 				<p class = 'dialog-title'>这是标题</p>
 				<span class = 'dialog-header-close'></span>
@@ -25,46 +28,48 @@
 			</div>
 		</div>
 	</div> -->
-</body>
-<script>
-	const dialog = new Dialog();
-	document.querySelector("#test1").addEventListener("click", function() {
-		dialog.message({
-			type: 'success',
-			content: 'falil',
-			callback: function() {
-				dialog.close();
-				dialog.confirm()
-			}
-		});
-	});
-	document.querySelector("#test2").addEventListener("click", function() {
-		dialog.confirm({
-			title: 'ceshi1',
-			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
-			onConfirm: function() {
-				dialog.alert({
-					content: 'ceshi2',
-					onConfirm: function() {
-						dialog.confirm({
-							content: 'ceshi3',
-							onConfirm: function() {
-								dialog.close();
-							}
-						});
-					}
-				});
-			}
-		});
-	});
-	document.querySelector("#test3").addEventListener("click", function() {
-		dialog.alert({
-			content: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
-			onConfirm: function() {
-				dialog.message()
-				// dialog.close();
-			}
-		});
-	});
-</script>
+  </body>
+  <script>
+    const dialog = new Dialog();
+    document.querySelector('#test1').addEventListener('click', function () {
+      dialog.message({
+        type: 'success',
+        content: 'falil',
+        callback: function () {
+          dialog.close();
+          dialog.confirm();
+        },
+      });
+    });
+    document.querySelector('#test2').addEventListener('click', function () {
+      dialog.confirm({
+        title: 'ceshi1',
+        content:
+          'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
+        onConfirm: function () {
+          dialog.alert({
+            content: 'ceshi2',
+            onConfirm: function () {
+              dialog.confirm({
+                content: 'ceshi3',
+                onConfirm: function () {
+                  dialog.close();
+                },
+              });
+            },
+          });
+        },
+      });
+    });
+    document.querySelector('#test3').addEventListener('click', function () {
+      dialog.alert({
+        content:
+          'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
+        onConfirm: function () {
+          dialog.message();
+          // dialog.close();
+        },
+      });
+    });
+  </script>
 </html>

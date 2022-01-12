@@ -37,7 +37,7 @@ class Dialog {
     const vnode: IVnode = {
       tag: 'div',
       props: {
-        className: 'dialog-' + platform + '-message gradientShow',
+        className: 'dialog-' + platform + '-message gradient-show',
       },
       children: [
         {
@@ -124,7 +124,7 @@ class Dialog {
         },
         {
           tag: 'div',
-          props: { className: 'dialog-box gradientShow' },
+          props: { className: 'dialog-box gradient-show' },
           children: [
             isPc
               ? {

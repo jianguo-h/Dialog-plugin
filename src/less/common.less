@@ -13,7 +13,7 @@ img {
   outline: none;
 }
 
-// 提示信息相同样式
+/* 提示信息相同样式 */
 .dialog-mobile-message,
 .dialog-pc-message {
   border-radius: 4px;
@@ -23,9 +23,14 @@ img {
   top: 50%;
   left: 50%;
   color: #fff;
-  background-color: rgba(0, 0, 0, 0.65);
-  &.gradientShow {
+  background-color: rgb(0 0 0 / 65%);
+  &.gradient-show {
     animation: gradientShow 0.3s ease forwards;
+  }
+  .dialog-message {
+    word-wrap: break-word;
+    line-height: @line-height;
+    text-align: center;
   }
   .dialog-content {
     display: flex;
@@ -46,23 +51,18 @@ img {
       }
     }
     .icon-success {
-      background-image: url(../static/images/icon-success.png);
+      background-image: url('../static/images/icon-success.png');
     }
     .icon-warning {
-      background-image: url(../static/images/icon-warning.png);
+      background-image: url('../static/images/icon-warning.png');
     }
     .icon-error {
-      background-image: url(../static/images/icon-error.png);
-    }
-    .dialog-message {
-      word-wrap: break-word;
-      line-height: @line-height;
-      text-align: center;
+      background-image: url('../static/images/icon-error.png');
     }
   }
 }
 
-// 信息框样式, 确认模态框相同样式
+/* 信息框样式, 确认模态框相同样式 */
 .dialog-pc-alert,
 .dialog-pc-confirm,
 .dialog-mobile-alert,
@@ -83,14 +83,14 @@ img {
   }
   .dialog-mask {
     z-index: 9999;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgb(0 0 0 / 30%);
   }
   .dialog-box {
     background-color: #fff;
     border-radius: 4px;
     z-index: 10000;
     overflow: hidden;
-    &.gradientShow {
+    &.gradient-show {
       animation: gradientShow 0.3s ease forwards;
     }
 

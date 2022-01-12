@@ -1,7 +1,7 @@
 /* pc端样式 */
 @import (reference) './variable.less';
 
-// 提示信息样式
+/* 提示信息样式 */
 .dialog-pc-message {
   .dialog-content {
     .dialog-message {
@@ -10,7 +10,7 @@
   }
 }
 
-// 信息框样式, 确认模态框
+/* 信息框样式, 确认模态框 */
 .dialog-pc-alert,
 .dialog-pc-confirm {
   .dialog-box {
@@ -34,18 +34,26 @@
         width: 16px;
         height: 16px;
         cursor: pointer;
-        background: url(../static/images/icon-close.png) center center no-repeat;
+        background: url('../static/images/icon-close.png') center center
+          no-repeat;
       }
     }
     .dialog-content {
       .dialog-message {
         max-width: @dialog-pc-box-message-max-width;
       }
+
       padding: @dialog-pc-box-content-vertical-padding @padding;
     }
     .dialog-footer {
       justify-content: flex-end;
       padding: 0 @padding 10px;
+      .dialog-confirm-btn {
+        color: #fff;
+        margin-left: 10px;
+        border-color: @confirm-btn-font-color;
+        background-color: @confirm-btn-font-color;
+      }
       .dialog-cancel-btn,
       .dialog-confirm-btn {
         height: @pc-btn-height;
@@ -57,12 +65,6 @@
         &:hover {
           opacity: 0.9;
         }
-      }
-      .dialog-confirm-btn {
-        color: #fff;
-        margin-left: 10px;
-        border-color: @confirm-btn-font-color;
-        background-color: @confirm-btn-font-color;
       }
     }
   }
