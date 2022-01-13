@@ -5,6 +5,7 @@
   "main": "dist/dialog.min.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "prepare": "husky install",
     "dev": "ts-node --project tsconfig.webpack.json build/dev-server.ts",
     "build": "ts-node --project tsconfig.webpack.json build/build.ts"
   },
