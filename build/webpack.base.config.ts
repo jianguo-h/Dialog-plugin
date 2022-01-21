@@ -6,6 +6,7 @@ const baseConfig: Configuration = {
   output: {
     filename: 'dialog.min.js',
     path: path.resolve(__dirname, '../dist'),
+    assetModuleFilename: 'media/[name].[hash:8].[ext]',
   },
   module: {
     rules: [
@@ -21,15 +22,7 @@ const baseConfig: Configuration = {
           /\.json$/,
           /\.(css|sass|scss|less)$/,
         ],
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 1024 * 10,
-              name: 'media/[name].[hash:8].[ext]',
-            },
-          },
-        ],
+        type: 'asset/resource',
       },
     ],
   },
